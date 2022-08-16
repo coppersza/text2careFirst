@@ -1,8 +1,8 @@
+using API.Extensions;
 using API.Helpers;
-using Core.Interfaces;
+using API.Middleware;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 
 namespace API
 {
@@ -19,7 +19,6 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();  
             services.AddDbContext<StoreContext>(x => 
                x.UseSqlite(_configuration.GetConnectionString("DefaultSQLiteConnection")));   
@@ -29,25 +28,23 @@ namespace API
             //     x.UseMySQL(_configuration.GetConnectionString("DefaultConnection")));
 
             services.AddAutoMapper(typeof(MappingProfiles));
+            services.AddApplicationServices();
+            services.AddSwaggerDocumentation();
 
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIv5", Version = "v1" });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ExceptionMiddleware>();
+
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIv5 v1"));
+                //app.UseDeveloperExceptionPage();
             }
+
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             app.UseHttpsRedirection();
 
@@ -55,6 +52,7 @@ namespace API
             app.UseStaticFiles();
 
             app.UseAuthorization();
+            app.UseSwaggerDocumentation();
 
             app.UseEndpoints(endpoints =>
             {
