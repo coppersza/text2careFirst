@@ -83,7 +83,7 @@
 		"Price" : 3.00,
 		"PictureUrl" : "images/products/4.jpg",
 		"ProductTypeId" : 1,
-		"StoreId" : 2,
+		"StoreId" : 3,
 		"StoreUid" : "A4A5EDB5-DEBB-40E0-B991-B3D14A06E7F0",
 		"IsActive" : true
 	},
@@ -94,7 +94,7 @@
 		"Price" : 3.00,
 		"PictureUrl" : "images/products/5.jpg",
 		"ProductTypeId" : 2,
-		"StoreId" : 2,
+		"StoreId" : 3,
 		"StoreUid" : "A4A5EDB5-DEBB-40E0-B991-B3D14A06E7F0",
 		"IsActive" : true
 	}
