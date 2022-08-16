@@ -1,3 +1,4 @@
+using API.Helpers;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -19,15 +20,18 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
-            // services.AddDbContext<StoreContext>(x =>
-            //     x.UseNpgsql(_config.GetConnectionString("DefaultConnection")));      
+            services.AddControllers();  
             services.AddDbContext<StoreContext>(x => 
-               x.UseSqlite(_configuration.GetConnectionString("DefaultSQLiteConnection")));                       
+               x.UseSqlite(_configuration.GetConnectionString("DefaultSQLiteConnection")));   
+            // services.AddDbContext<StoreContext>(x =>
+            //     x.UseNpgsql(_config.GetConnectionString("DefaultConnection")));                                       
             // services.AddDbContext<StoreContext>(x => 
             //     x.UseMySQL(_configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddAutoMapper(typeof(MappingProfiles));
+
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddSwaggerGen(c =>
             {
@@ -48,6 +52,7 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
