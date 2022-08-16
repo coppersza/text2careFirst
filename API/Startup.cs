@@ -1,3 +1,4 @@
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -19,8 +20,14 @@ namespace API
         {
 
             services.AddControllers();
+            // services.AddDbContext<StoreContext>(x =>
+            //     x.UseNpgsql(_config.GetConnectionString("DefaultConnection")));      
             services.AddDbContext<StoreContext>(x => 
-                x.UseMySQL(_configuration.GetConnectionString("DefaultConnection")));
+               x.UseSqlite(_configuration.GetConnectionString("DefaultSQLiteConnection")));                       
+            // services.AddDbContext<StoreContext>(x => 
+            //     x.UseMySQL(_configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddSwaggerGen(c =>
             {

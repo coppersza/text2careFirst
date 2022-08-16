@@ -1,0 +1,27 @@
+[
+	{
+		"Id" : 1,
+		"Name" : "Food",
+		"Description" : null
+	},
+	{
+		"Id" : 2,
+		"Name" : "Sanitary",
+		"Description" : null
+	},
+	{
+		"Id" : 3,
+		"Name" : "Accomodation",
+		"Description" : null
+	},
+	{
+		"Id" : 4,
+		"Name" : "Pet Food",
+		"Description" : null
+	},
+	{
+		"Id" : 5,
+		"Name" : "Disaster Relief",
+		"Description" : null
+	}
+]
