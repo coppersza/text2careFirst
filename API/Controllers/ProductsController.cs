@@ -5,20 +5,18 @@ using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
-using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    public class ProductsController : BaseApiController
+    public class ProductController : BaseApiController
     {
         private readonly IGenericRepository<Product> _productRepo;
         private readonly IGenericRepository<ProductType> _productTypeRepo;
         private readonly IGenericRepository<Store> _storeRepo;
         private readonly IMapper _mapper;
 
-        public ProductsController(IGenericRepository<Product> productRepo, 
+        public ProductController(IGenericRepository<Product> productRepo, 
             IGenericRepository<ProductType> productTypeRepo,
             IGenericRepository<Store> storeRepo,
             IMapper mapper)
@@ -33,13 +31,13 @@ namespace API.Controllers
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParams productSpecParams)
         {
             var spec = new ProductsWithTypeStoreSpecification(productSpecParams);
-            var countSpec = new ProductWithFiltersWithCountSpecification(productSpecParams);
+            var countSpec = new ProductsWithTypeStoreSpecificationCount(productSpecParams);
             var totalItems = await _productRepo.CountAsync(countSpec);
 
             var products = await _productRepo.ListAsync(spec);
-            var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
+            var dataMap = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
 
-            return Ok(new Pagination<ProductToReturnDto>(productSpecParams.PageIndex, productSpecParams.PageSize, totalItems, data));
+            return Ok(new Pagination<ProductToReturnDto>(productSpecParams.PageIndex, productSpecParams.PageSize, totalItems, dataMap));
         }
 
         [HttpGet("{id}")]
@@ -66,11 +64,26 @@ namespace API.Controllers
         }
 
         [HttpGet("stores")]
-        public async Task<ActionResult<IReadOnlyList<Store>>> GetStores()
+        public async Task<ActionResult<IReadOnlyList<StoreToReturnDto>>> GetStores()        
         {
-            var stores = await _storeRepo.ListAllAsync();
-            return Ok(stores);
+            var spec = new StoreWithCountrySpecification();
+            var stores = await _storeRepo.ListAsync(spec);
+            var data = _mapper.Map<IReadOnlyList<Store>, IReadOnlyList<StoreToReturnDto>>(stores);
+            // var stores = await _storeRepo.ListAllAsync();
+            return Ok(data);
         }
+        [HttpGet("stores/{id}")]
+        public async Task<ActionResult<StoreToReturnDto>> GetStore(int id)        
+        {
+            var spec = new StoreWithCountrySpecification(id);
+            // return await _storeRepo.GetEntityWithSpec(spec);
+            var store = await _storeRepo.GetEntityWithSpec(spec);
+            return _mapper.Map<Store, StoreToReturnDto>(store);    
+            // var spec = new StoreWithCountrySpecification(id);
+            // var store = await _storeRepo.GetEntityWithSpec(spec);
+            // if (store == null) return NotFound(new ApiResponse(404));
+            // return _mapper.Map<Store, StoreToReturnDto>(store);                   
+        }        
 
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()

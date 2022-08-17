@@ -5,16 +5,16 @@ using Core.Entities;
 
 namespace API.Helpers
 {
-    public class ProductUrlResolver : IValueResolver<Product, ProductToReturnDto, string>
+    public class StoreUrlResolver : IValueResolver<Store, StoreToReturnDto, string>
     {
         private readonly IConfiguration _config;
 
-        public ProductUrlResolver(IConfiguration config)
+        public StoreUrlResolver(IConfiguration config)
         {
             _config = config;
         }
 
-        public string Resolve(Product source, ProductToReturnDto destination, string destMember, ResolutionContext context)
+        public string Resolve(Store source, StoreToReturnDto destination, string destMember, ResolutionContext context)
         {
             if (!string.IsNullOrEmpty(source.ImageUrl))
             {
@@ -23,5 +23,4 @@ namespace API.Helpers
             return null;
         }
     }
-
 }

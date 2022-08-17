@@ -3,12 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities
 {
-    public class Store : BaseEntity
+    public class Recipient : BaseEntity
     {
         [Column(TypeName = "char(38)")]
         [StringLength(38)]
-        public string StoreUid { get; set; }
-        public string StoreName { get; set; }
+        public string RecipientUid { get; set; }
         public string Description { get; set; } 
         public string ImageUrl { get; set; }        
         public string FirstName { get; set; }
@@ -29,5 +28,11 @@ namespace Core.Entities
         public string PortalPassword { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
+
+        public int EmployeeId { get; set; }        
+
+        [Column(TypeName = "char(38)")]
+        [StringLength(38)]
+        public string EmployeeUid { get; set; }
     }
 }

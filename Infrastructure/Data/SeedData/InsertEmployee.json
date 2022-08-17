@@ -1,0 +1,26 @@
+[
+	{
+		"Id" : 1,
+		"EmployeeUid" : "00000000-0000-0000-0000-000000000000",
+		"FullName" : "Text2Care",
+		"Description" : "Text2Care",
+		"ImageUrl" : "images/products/1.jpg",
+        "CountryId" : 1
+	},
+	{
+		"Id" : 2,
+		"EmployeeUid" : "3361B898-2259-4C6E-9C5C-6792126986B7",
+		"FullName" : "Sean South Africa",
+		"Description" : "Sean South Africa",
+		"ImageUrl" : "images/products/2.jpg",
+        "CountryId" : 1
+	},
+	{
+		"Id" : 3,
+		"EmployeeUid" : "7084C13C-5176-48AA-B405-AE919A1D1BFF",
+		"FullName" : "Sean USA",
+		"Description" : "Sean USA",
+		"ImageUrl" : "images/products/3.jpg",
+        "CountryId" : 1
+	}
+]
