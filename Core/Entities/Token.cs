@@ -15,6 +15,8 @@ namespace Core.Entities
         public string DonatorUid { get; set; }
         public int DonatorId { get; set; }
         public Donator Donator{ get; set; }
+        public int UserId { get; set; }
+        // public User User{ get; set; }     //TO DO   
         public string TokenName { get; set; }
 
         [Column(TypeName = "char(38)")]
