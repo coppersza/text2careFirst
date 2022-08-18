@@ -63,7 +63,7 @@ namespace API.Controllers
 
         }
 
-        [HttpGet("stores")]
+        [HttpGet("store")]
         public async Task<ActionResult<IReadOnlyList<StoreToReturnDto>>> GetStores()        
         {
             var spec = new StoreWithCountrySpecification();
@@ -72,7 +72,7 @@ namespace API.Controllers
             // var stores = await _storeRepo.ListAllAsync();
             return Ok(data);
         }
-        [HttpGet("stores/{id}")]
+        [HttpGet("store/{id}")]
         public async Task<ActionResult<StoreToReturnDto>> GetStore(int id)        
         {
             var spec = new StoreWithCountrySpecification(id);
@@ -85,7 +85,7 @@ namespace API.Controllers
             // return _mapper.Map<Store, StoreToReturnDto>(store);                   
         }        
 
-        [HttpGet("types")]
+        [HttpGet("type")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
         {
             var productTypes = await _productTypeRepo.ListAllAsync();
