@@ -233,6 +233,7 @@ namespace Infrastructure.Data.Migrations
                     TokenUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
                     DonatorUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
                     DonatorId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
                     TokenName = table.Column<string>(type: "TEXT", maxLength: 25, nullable: false),
                     StoreUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
                     StoreId = table.Column<int>(type: "INTEGER", nullable: false),

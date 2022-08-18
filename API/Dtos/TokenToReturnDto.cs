@@ -7,6 +7,7 @@ namespace API.Dtos
         public string TokenUid { get; set; }   
 
         public string Donator{ get; set; }
+        public int UserId { get; set; }
         public string TokenName { get; set; }
 
         public string Store{ get; set; }

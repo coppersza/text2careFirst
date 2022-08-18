@@ -496,6 +496,9 @@ namespace Infrastructure.Data.Migrations
                         .HasMaxLength(38)
                         .HasColumnType("char(38)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("Valid")
                         .HasColumnType("INTEGER");
 
