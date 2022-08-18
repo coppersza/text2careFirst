@@ -12,75 +12,75 @@ namespace Infrastructure.Data
             try
             {
                 var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                if (!context.ProductType.Any()){
+                if (!context.ProductTypes.Any()){
                     var typesData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertProductType.json");
                     var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
                     foreach (var item in types)
                     {
-                        context.ProductType.Add(item);
+                        context.ProductTypes.Add(item);
                     }
                     await context.SaveChangesAsync();
                 }
-                if (!context.Country.Any()){
+                if (!context.Countries.Any()){
                     var typesData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertCountry.json");
                     var types = JsonSerializer.Deserialize<List<Country>>(typesData);
                     foreach (var item in types)
                     {
-                        context.Country.Add(item);
+                        context.Countries.Add(item);
                     }
                     await context.SaveChangesAsync();
                 }                
-                if (!context.Store.Any()){
+                if (!context.Stores.Any()){
                     var storeData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertStore.json");
                     var stores = JsonSerializer.Deserialize<List<Store>>(storeData);
                     foreach (var item in stores)
                     {
-                        context.Store.Add(item);
+                        context.Stores.Add(item);
                     }
                     await context.SaveChangesAsync();
                 }   
-                if (!context.Product.Any()){
+                if (!context.Products.Any()){
                     var productData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertProduct.json");
                     var products = JsonSerializer.Deserialize<List<Product>>(productData);
                     foreach (var item in products)
                     {
-                        context.Product.Add(item);
+                        context.Products.Add(item);
                     }
                     await context.SaveChangesAsync();
                 }
-                if (!context.Recipient.Any()){
+                if (!context.Recipients.Any()){
                     var jsonData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertRecipient.json");
                     var data = JsonSerializer.Deserialize<List<Recipient>>(jsonData);
                     foreach (var item in data)
                     {
-                        context.Recipient.Add(item);
+                        context.Recipients.Add(item);
                     }
                     await context.SaveChangesAsync();
                 }   
-                if (!context.Employee.Any()){
+                if (!context.Employees.Any()){
                     var jsonData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertEmployee.json");
                     var data = JsonSerializer.Deserialize<List<Employee>>(jsonData);
                     foreach (var item in data)
                     {
-                        context.Employee.Add(item);
+                        context.Employees.Add(item);
                     }
                     await context.SaveChangesAsync();
                 }  
-                if (!context.Donator.Any()){
+                if (!context.Donators.Any()){
                     var jsonData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertDonator.json");
                     var data = JsonSerializer.Deserialize<List<Donator>>(jsonData);
                     foreach (var item in data)
                     {
-                        context.Donator.Add(item);
+                        context.Donators.Add(item);
                     }
                     await context.SaveChangesAsync();
                 }    
-                if (!context.Token.Any()){
+                if (!context.Tokens.Any()){
                     var jsonData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertToken.json");
                     var data = JsonSerializer.Deserialize<List<Token>>(jsonData);
                     foreach (var item in data)
                     {
-                        context.Token.Add(item);
+                        context.Tokens.Add(item);
                     }
                     await context.SaveChangesAsync();
                 }                                                

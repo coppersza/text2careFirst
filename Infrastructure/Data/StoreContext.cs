@@ -3,6 +3,7 @@ using System.Reflection;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Infrastructure.Data
 {
@@ -12,20 +13,25 @@ namespace Infrastructure.Data
         {
         }
 
-        public DbSet<Product> Product { get; set; }
-        public DbSet<ProductType> ProductType { get; set; }
-        public DbSet<Store> Store { get; set; }
-        public DbSet<Recipient> Recipient { get; set; }
-        public DbSet<Employee> Employee { get; set; }
-        public DbSet<Donator> Donator { get; set; }
-        public DbSet<Country> Country { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductType> ProductTypes { get; set; }
+        public DbSet<Store> Stores { get; set; }
+        public DbSet<Recipient> Recipients { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Donator> Donators { get; set; }
+        public DbSet<Country> Countries { get; set; }
 
-        public DbSet<Token> Token { get; set; }
+        public DbSet<Token> Tokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                entityType.SetTableName(entityType.DisplayName());
+            }                             
             if (Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite")
             {
                 foreach(var entityType in modelBuilder.Model.GetEntityTypes())
