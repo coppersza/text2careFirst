@@ -4,6 +4,7 @@ namespace API.Dtos
 {
     public class TokenToReturnDto
     {
+        public int Id { get; set; }
         public string TokenUid { get; set; }   
 
         public string Donator{ get; set; }

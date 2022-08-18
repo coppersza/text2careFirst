@@ -1,4 +1,5 @@
 export interface IToken {
+  id: number;
   tokenUid: string;
   donator: string;
   userId: number;

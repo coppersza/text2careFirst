@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { IToken } from 'src/app/shared/models/token';
 
 @Component({
   selector: 'app-token-item',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./token-item.component.scss']
 })
 export class TokenItemComponent implements OnInit {
+  @Input() token: IToken;
 
   constructor() { }
 
