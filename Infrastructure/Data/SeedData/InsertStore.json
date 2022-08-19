@@ -5,6 +5,9 @@
 		"StoreName" : "Random",
 		"Description" : "Random Description",
 		"ImageUrl" : "images/products/1.jpg",
+		"FirstName" : "Random",
+		"Surname" : "Owner",
+		"FullName" : "Random Owner",        
         "CountryId" : 1
 	},
 	{
@@ -13,6 +16,9 @@
 		"StoreName" : "Just Chicken - Choice Plaza",
 		"Description" : "Just Chicken - Choice Plaza",
 		"ImageUrl" : "images/products/2.jpg",
+		"FirstName" : "Just Chicken",
+		"Surname" : "Owner",
+		"FullName" : "Just Chicken Owner",        
         "CountryId" : 1
 	},
 	{
@@ -21,6 +27,9 @@
 		"StoreName" : "Soul City Day Care",
 		"Description" : "Soul City Day Care desc",
 		"ImageUrl" : "images/products/3.jpg",
+		"FirstName" : "Soul City",
+		"Surname" : "Owner",
+		"FullName" : "Soul City Owner",
         "CountryId" : 1
 	}
 ]

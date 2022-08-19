@@ -47,7 +47,7 @@ export class ShopComponent implements OnInit {
   }
   getStores(){
     this.shopService.getStores().subscribe(response => {
-      this.stores = [{id: 0, storeName: 'All', country:'', description:'', imageUrl:''}, ...response];
+      this.stores = [{id: 0, storeName: 'All', description:'', imageUrl:'', country:'', fullName:''}, ...response];
       // this.stores = response;
     }, error => {
       console.log(error);

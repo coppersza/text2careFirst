@@ -4,4 +4,5 @@ export interface IStore {
   description: string;
   imageUrl: string;
   country: string;
+  fullName: string;
 }

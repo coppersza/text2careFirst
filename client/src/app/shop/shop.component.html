@@ -63,23 +63,7 @@
 
     </section>
   </div>
-  <div *ngIf="store && store.id !== 0">
-
-      <div class="card h-100 shadow-sm" >
-        <div class="row">
-          <section class="col-3">
-            <!-- <div class="image position-relative" style="cursor:pointer;"> -->
-                <img src="{{store.imageUrl}}" alt="{{store.storeName}}" class="img-fluid bg-info">
-            <!-- </div> -->
-          </section>
-          <section class="col-9">
-            <!-- <div class="d-flex justify-content-between align-items-center pb-2"> -->
-              <h4>{{store.storeName}}</h4>
-              <p>{{store.description}}</p>
-            <!-- </div> -->
-          </section>
-        </div>
-      </div>
-  </div>
+  <!-- TODO : Change to component -->
+  <app-shop-details [store]="store"></app-shop-details>
 </div>
 
