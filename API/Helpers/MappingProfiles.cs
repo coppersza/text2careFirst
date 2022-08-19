@@ -29,6 +29,9 @@ namespace API.Helpers
                 .ForMember(d => d.Store, o => o.MapFrom(s => s.Store.StoreName))
                 .ForMember(d => d.Recipient, o => o.MapFrom(s => s.Recipient.FullName))
                 .ForMember(d => d.Donator, o => o.MapFrom(s => s.Donator.FullName));
+
+            CreateMap<CustomerBasketDto, CustomerBasket>();
+            CreateMap<BasketItemDto, BasketItem>();                
         }
     }
 }

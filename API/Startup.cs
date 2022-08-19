@@ -4,6 +4,7 @@ using API.Middleware;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 
 namespace API
 {
@@ -27,6 +28,11 @@ namespace API
             //     x.UseNpgsql(_config.GetConnectionString("DefaultConnection")));                                       
             // services.AddDbContext<StoreContext>(x => 
             //     x.UseMySQL(_configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddSingleton<IConnectionMultiplexer>(c => {
+                var configuration = ConfigurationOptions.Parse(_configuration.GetConnectionString("RedisConnection"), true);
+                return ConnectionMultiplexer.Connect(configuration);
+            });
 
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddApplicationServices();
