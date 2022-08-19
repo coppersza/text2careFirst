@@ -15,7 +15,7 @@ import { TokenService } from './token.service';
   styleUrls: ['./token.component.scss']
 })
 export class TokenComponent implements OnInit {
-  @ViewChild('search', {static: true}) searchValue: ElementRef;
+  @ViewChild('search', {static: false}) searchValue: ElementRef;
   tokens: IToken[];
   stores: IStore[];
   productTypes: IProductType[];

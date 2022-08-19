@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IToken } from 'src/app/shared/models/token';
 import { TokenService } from '../token.service';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-token-details',
@@ -11,7 +12,12 @@ import { TokenService } from '../token.service';
 export class TokenDetailsComponent implements OnInit {
   token: IToken;
 
-  constructor(private tokenService: TokenService, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private tokenService: TokenService,
+    private activatedRoute: ActivatedRoute,
+    private breadCrumbService: BreadcrumbService) {
+      this.breadCrumbService.set('@tokenDetails', ' ');
+    }
 
   ngOnInit(): void {
     this.loadToken();
@@ -20,6 +26,7 @@ export class TokenDetailsComponent implements OnInit {
   loadToken(){
     this.tokenService.getToken(+this.activatedRoute.snapshot.paramMap.get('id')).subscribe(token => {
       this.token = token;
+      this.breadCrumbService.set('@tokenDetails', token.tokenName);
     }, error => {
       console.log(error);
     });

@@ -5,7 +5,7 @@ import { TokenDetailsComponent } from './token-details/token-details.component';
 
 const routes: Routes = [
   {path: '', component: TokenComponent},
-  {path: ':id', component: TokenDetailsComponent},
+  {path: ':id', component: TokenDetailsComponent, data: {breadcrumb: {alias: 'tokenDetails'} } },
 ];
 
 @NgModule({
