@@ -12,8 +12,7 @@
       <h5 class="text-uppercase">{{token.tokenName}}</h5>
     </a>
     <h6 class="text-uppercase">{{token.store}}</h6>
-    <h6 class="text-uppercase">Created {{token.dateCreated | date}}</h6>
-    <h6 class="text-uppercase">Given Out {{token.dateAssigned | date}}</h6>
-    <span class="mb-2">{{token.costPrice | currency}}</span>
+    <p>Created : {{token.dateCreated | date}}</p>
+    <p>Given out : {{token.dateAssigned | date}}</p>
   </div>
 </div>

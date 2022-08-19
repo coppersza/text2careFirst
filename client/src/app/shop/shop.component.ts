@@ -14,6 +14,7 @@ export class ShopComponent implements OnInit {
   @ViewChild('search', {static: false}) searchValue: ElementRef;
   products: IProduct[];
   stores: IStore[];
+  store: IStore;
   productTypes: IProductType[];
   shopParams = new ShopParams();
   totalCount: number;
@@ -64,6 +65,7 @@ export class ShopComponent implements OnInit {
   onStoreSelected(storeId: number){
     this.shopParams.storeId = storeId;
     this.shopParams.pageNumber = 1;
+    this.store = this.stores.find(store => store.id === storeId);
     this.getProducts();
   }
   onProductTypeSelected(productTypeId: number){
