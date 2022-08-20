@@ -1,0 +1,19 @@
+using System;
+using System.Runtime.Serialization;
+
+namespace Core.Entities.OrderAggregate
+{
+    public enum OrderStatus
+    {
+        [EnumMember(Value = "Pending")]
+        Pending, 
+        [EnumMember(Value = "Payment Received")]
+        PaymentReceived,
+        [EnumMember(Value = "Payment Failed")]
+        PaymentFailed,
+        [EnumMember(Value = "Order Shipped")]
+        Shipped,
+        [EnumMember(Value = "Order Delivered")]
+        Delivered
+    }
+}

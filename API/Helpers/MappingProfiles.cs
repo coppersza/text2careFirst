@@ -1,7 +1,9 @@
 using System;
 using API.Dtos;
+using API.Dtos.Users;
 using AutoMapper;
 using Core.Entities;
+using Core.Entities.Identity;
 
 namespace API.Helpers
 {
@@ -30,8 +32,9 @@ namespace API.Helpers
                 .ForMember(d => d.Recipient, o => o.MapFrom(s => s.Recipient.FullName))
                 .ForMember(d => d.Donator, o => o.MapFrom(s => s.Donator.FullName));
 
-            CreateMap<CustomerBasketDto, CustomerBasket>();
-            CreateMap<BasketItemDto, BasketItem>();                
+            CreateMap<CustomerBasket, CustomerBasketDto>();
+            CreateMap<BasketItem, BasketItemDto>();                
+            CreateMap<Address, AddressDto>().ReverseMap();                
         }
     }
 }
