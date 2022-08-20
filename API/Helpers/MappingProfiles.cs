@@ -32,9 +32,11 @@ namespace API.Helpers
                 .ForMember(d => d.Recipient, o => o.MapFrom(s => s.Recipient.FullName))
                 .ForMember(d => d.Donator, o => o.MapFrom(s => s.Donator.FullName));
 
-            CreateMap<CustomerBasket, CustomerBasketDto>();
-            CreateMap<BasketItem, BasketItemDto>();                
-            CreateMap<Address, AddressDto>().ReverseMap();                
+            CreateMap<Address, AddressDto>().ReverseMap();           
+
+            CreateMap<CustomerBasketDto, CustomerBasket>();
+            CreateMap<BasketItemDto, BasketItem>();      
+                 
         }
     }
 }
