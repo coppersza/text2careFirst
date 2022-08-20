@@ -13,6 +13,8 @@ const routes: Routes = [
   {path: 'not-found', component: NotFoundComponent, data:{breadcrumb: 'Not found Errors'}},
   {path: 'shop', loadChildren: () => import('./shop/shop.module').then(mod => mod.ShopModule), data:{breadcrumb: 'Shop'}},
   {path: 'token', loadChildren: () => import('./token/token.module').then(mod => mod.TokenModule), data:{breadcrumb: 'Token'}},
+  {path: 'basket', loadChildren: () => import('./basket/basket.module').then(mod => mod.BasketModule), data:{breadcrumb: 'Basket'}},
+  {path: 'checkout', loadChildren: () => import('./checkout/checkout.module').then(mod => mod.CheckoutModule), data:{breadcrumb: 'Checkout'}},
   {path: '**', redirectTo:'not-found', pathMatch: 'full'}
 ];
 
