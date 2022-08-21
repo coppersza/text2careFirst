@@ -15,7 +15,8 @@ const routes: Routes = [
   {path: 'token', loadChildren: () => import('./token/token.module').then(mod => mod.TokenModule), data:{breadcrumb: 'Token'}},
   {path: 'basket', loadChildren: () => import('./basket/basket.module').then(mod => mod.BasketModule), data:{breadcrumb: 'Basket'}},
   {path: 'checkout', loadChildren: () => import('./checkout/checkout.module').then(mod => mod.CheckoutModule), data:{breadcrumb: 'Checkout'}},
-  {path: '**', redirectTo:'not-found', pathMatch: 'full'}
+  {path: 'account', loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule), data:{breadcrumb: {skip: true}}},
+  {path: '**', redirectTo:'not-found', pathMatch: 'full'},
 ];
 
 @NgModule({
