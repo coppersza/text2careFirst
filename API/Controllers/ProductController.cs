@@ -53,29 +53,7 @@ namespace API.Controllers
             return _mapper.Map<Product, ProductToReturnDto>(product);
 
         }
-        [Cached(600)]
-        [HttpGet("store")]
-        public async Task<ActionResult<IReadOnlyList<StoreToReturnDto>>> GetStores()        
-        {
-            var spec = new StoreWithCountrySpecification();
-            var stores = await _storeRepo.ListAsync(spec);
-            var data = _mapper.Map<IReadOnlyList<Store>, IReadOnlyList<StoreToReturnDto>>(stores);
-            // var stores = await _storeRepo.ListAllAsync();
-            return Ok(data);
-        }
-        [Cached(600)]
-        [HttpGet("store/{id}")]
-        public async Task<ActionResult<StoreToReturnDto>> GetStore(int id)        
-        {
-            var spec = new StoreWithCountrySpecification(id);
-            // return await _storeRepo.GetEntityWithSpec(spec);
-            var store = await _storeRepo.GetEntityWithSpec(spec);
-            return _mapper.Map<Store, StoreToReturnDto>(store);    
-            // var spec = new StoreWithCountrySpecification(id);
-            // var store = await _storeRepo.GetEntityWithSpec(spec);
-            // if (store == null) return NotFound(new ApiResponse(404));
-            // return _mapper.Map<Store, StoreToReturnDto>(store);                   
-        }        
+    
         [Cached(600)]
         [HttpGet("type")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()

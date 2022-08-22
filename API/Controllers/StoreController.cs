@@ -1,4 +1,5 @@
 using API.Dtos;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -18,7 +19,7 @@ namespace API.Controllers
             _storeRepo = storeRepo;
             _mapper = mapper;
         }
-
+        [Cached(600)]
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<StoreToReturnDto>>> GetStores()        
         {
@@ -27,7 +28,7 @@ namespace API.Controllers
             var dataMap = _mapper.Map<IReadOnlyList<Store>, IReadOnlyList<StoreToReturnDto>>(data);
             return Ok(dataMap);
         }
-
+        [Cached(600)]
         [HttpGet("{id}")]
         public async Task<ActionResult<StoreToReturnDto>> GetStore(int id)        
         {

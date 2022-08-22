@@ -28,6 +28,8 @@ export class ShopService {
     }
 
     if (this.productCache.size > 0 && useCache){
+      console.log(this.productCache);
+      console.log(this.shopParams);
       if (this.productCache.has(Object.values(this.shopParams).join('-'))){
         this.pagination.data = this.productCache.get(Object.values(this.shopParams).join('-'));
         return of(this.pagination);
@@ -46,7 +48,7 @@ export class ShopService {
     }
     params = params.append('sort', this.shopParams.sort);
     params = params.append('pageIndex', this.shopParams.pageNumber.toString());
-    params = params.append('pageIndex', this.shopParams.pageSize.toString());
+    params = params.append('pageSize', this.shopParams.pageSize.toString());
     return this.http.get<ProductPagination>(this.baseUrl + 'product', {observe:'response', params})
       .pipe(
         map(response => {

@@ -19,7 +19,7 @@ export class TokenComponent implements OnInit {
   tokens: IToken[];
   stores: IStore[];
   productTypes: IProductType[];
-  tokenParams = new TokenParams();
+  tokenParams: TokenParams;
   totalCount: number;
 
   sortOptions = [
@@ -29,18 +29,18 @@ export class TokenComponent implements OnInit {
   ];
 
 
-  constructor(private tokenService: TokenService) { }
+  constructor(private tokenService: TokenService) {
+    this.tokenParams = this.tokenService.getTokenParams();
+   }
 
   ngOnInit(): void {
-    this.getTokens();
+    this.getTokens(true);
     this.getStores();
     this.getProductTypes();
   }
-  getTokens(){
-    this.tokenService.getTokens(this.tokenParams).subscribe(response => {
+  getTokens(useCache = false){
+    this.tokenService.getTokens(useCache).subscribe(response => {
         this.tokens = response.data;
-        this.tokenParams.pageNumber = response.pageIndex;
-        this.tokenParams.pageSize = response.pageSize;
         this.totalCount = response.count;
       }, error => {
         console.log(error);
@@ -64,33 +64,49 @@ export class TokenComponent implements OnInit {
   }
 
   onStoreSelected(storeId: number){
-    this.tokenParams.storeId = storeId;
-    this.tokenParams.pageNumber = 1;
+    const params = this.tokenService.getTokenParams();
+    params.storeId = storeId;
+    params.pageNumber = 1;
+    this.tokenService.setTokenParams(params);
     this.getTokens();
   }
+
   onProductTypeSelected(productTypeId: number){
-    this.tokenParams.productTypeId = productTypeId;
-    this.tokenParams.pageNumber = 1;
+    const params = this.tokenService.getTokenParams();
+    params.productTypeId = productTypeId;
+    params.pageNumber = 1;
+    this.tokenService.setTokenParams(params);
     this.getTokens();
+
   }
   onSortSelected(sort: string){
-    this.tokenParams.sort = sort;
+    const params = this.tokenService.getTokenParams();
+    params.sort = sort;
+    this.tokenService.setTokenParams(params);
     this.getTokens();
   }
   onPageChanged(event: any){
-    if (this.tokenParams.pageNumber !== event){
-      this.tokenParams.pageNumber = event;
-      this.getTokens();
+    const params = this.tokenService.getTokenParams();
+
+    if (params.pageNumber !== event){
+      params.pageNumber = event;
+      this.tokenService.setTokenParams(params);
+      this.getTokens(true);
     }
   }
+
   onSearch(){
-    this.tokenParams.search = this.searchValue.nativeElement.value;
-    this.tokenParams.pageNumber = 1;
+    const params = this.tokenService.getTokenParams();
+
+    params.search = this.searchValue.nativeElement.value;
+    params.pageNumber = 1;
+    this.tokenService.setTokenParams(params);
     this.getTokens();
   }
   onReset(){
     this.searchValue.nativeElement.value = '';
     this.tokenParams = new TokenParams();
+    this.tokenService.setTokenParams(this.tokenParams);
     this.getTokens();
   }
 
