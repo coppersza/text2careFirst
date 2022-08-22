@@ -28,7 +28,7 @@
                               class="img-fluid" style="max-height: 50px;">
                           <div class="ms-3 d-inline-block align-middle">
                               <h5 class="mb-0">
-                                  <a routerLink="/shop/{{item.id}}"
+                                  <a routerLink="/shop/{{item.id || item.productId}}"
                                       class="text-dark text-decoration-none">{{item.productName}}</a>
                               </h5>
                               <span

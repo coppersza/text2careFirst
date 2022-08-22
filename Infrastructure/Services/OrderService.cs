@@ -44,7 +44,7 @@ namespace Infrastructure.Services
 
             if (existingOrder != null){
                 _unitOfWork.Repository<Order>().Delete(existingOrder);
-                //await _paymentService.CreateOrUpdatePaymentIntent(basket.PaymentIntentId);
+                await _paymentService.CreateOrUpdatePaymentIntent(basket.PaymentIntentId);
             }
             
             //create order
@@ -55,8 +55,6 @@ namespace Infrastructure.Services
             var result = await _unitOfWork.Complete();
             if (result <= 0) return null;
             
-            await _basketRepo.DeleteBasketAsync(basketId);
-
             //return the order
             return order;
         }
