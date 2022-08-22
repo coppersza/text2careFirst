@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using System.Text.Json;
 using Core.Entities;
+using Core.Entities.OrderAggregate;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Data
@@ -83,7 +84,16 @@ namespace Infrastructure.Data
                         context.Tokens.Add(item);
                     }
                     await context.SaveChangesAsync();
-                }                                                
+                }        
+                if (!context.DeliveryMethods.Any()){
+                    var jsonData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertDeliveryMethod.json");
+                    var data = JsonSerializer.Deserialize<List<DeliveryMethod>>(jsonData);
+                    foreach (var item in data)
+                    {
+                        context.DeliveryMethods.Add(item);
+                    }
+                    await context.SaveChangesAsync();
+                }                                                                
                      
             }
             catch(Exception ex){

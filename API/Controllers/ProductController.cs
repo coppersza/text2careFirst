@@ -56,7 +56,7 @@ namespace API.Controllers
             //     Name = product.Name,
             //     Description = product.Description,
             //     Price = product.Price,
-            //     PictureUrl = product.PictureUrl,
+            //     ImageUrl = product.ImageUrl,
             //     ProductType = product.ProductType.Name,
             //     Store = product.Store.Name
             // };

@@ -4,6 +4,7 @@ using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Core.Entities.OrderAggregate;
 
 namespace Infrastructure.Data
 {
@@ -20,8 +21,11 @@ namespace Infrastructure.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Donator> Donators { get; set; }
         public DbSet<Country> Countries { get; set; }
-
         public DbSet<Token> Tokens { get; set; }
+        
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
