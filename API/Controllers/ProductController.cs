@@ -27,6 +27,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+        [Cached(600)]
         [HttpGet]
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParams productSpecParams)
         {
@@ -40,6 +41,7 @@ namespace API.Controllers
             return Ok(new Pagination<ProductToReturnDto>(productSpecParams.PageIndex, productSpecParams.PageSize, totalItems, dataMap));
         }
 
+        [Cached(600)]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
@@ -50,19 +52,8 @@ namespace API.Controllers
             if (product == null) return NotFound(new ApiResponse(404));
             return _mapper.Map<Product, ProductToReturnDto>(product);
 
-            // var product = await _productRepo.GetByIdAsync(id);
-            // return new ProductToReturnDto{
-            //     Id = product.Id,
-            //     Name = product.Name,
-            //     Description = product.Description,
-            //     Price = product.Price,
-            //     ImageUrl = product.ImageUrl,
-            //     ProductType = product.ProductType.Name,
-            //     Store = product.Store.Name
-            // };
-
         }
-
+        [Cached(600)]
         [HttpGet("store")]
         public async Task<ActionResult<IReadOnlyList<StoreToReturnDto>>> GetStores()        
         {
@@ -72,6 +63,7 @@ namespace API.Controllers
             // var stores = await _storeRepo.ListAllAsync();
             return Ok(data);
         }
+        [Cached(600)]
         [HttpGet("store/{id}")]
         public async Task<ActionResult<StoreToReturnDto>> GetStore(int id)        
         {
@@ -84,7 +76,7 @@ namespace API.Controllers
             // if (store == null) return NotFound(new ApiResponse(404));
             // return _mapper.Map<Store, StoreToReturnDto>(store);                   
         }        
-
+        [Cached(600)]
         [HttpGet("type")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
         {

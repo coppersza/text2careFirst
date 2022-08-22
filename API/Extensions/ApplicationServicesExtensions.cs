@@ -9,7 +9,7 @@ namespace API.Extensions
     public static class ApplicationServicesExtensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
-        {       
+        {               
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));       
                      
             services.AddScoped<IBasketRepository, BasketRespository>();             
@@ -17,6 +17,7 @@ namespace API.Extensions
             services.AddScoped<IOrderService, OrderService>();   
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>(); 
+            services.AddSingleton<IResponseCacheService, ResponseCacheService>();
             
             services.Configure<ApiBehaviorOptions>(options =>
             {
