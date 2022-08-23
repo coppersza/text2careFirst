@@ -6,7 +6,7 @@ namespace Core.Specifications
     {
         public DonatorWithCountrySpecification()
         {
-            AddInclude(x => x.Country);
+            Includes.Add(x => x.Country);
         }
 
         public DonatorWithCountrySpecification(int id) : base(x => x.Id == id)

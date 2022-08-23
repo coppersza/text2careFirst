@@ -69,6 +69,7 @@ export class TokenService {
   getToken(id: number){
     let token: IToken;
     this.tokenCache.forEach((tokens: IToken[]) => {
+      
       token = tokens.find(p => p.id === id);
     })
     if (token){

@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Core.Specifications
 {
@@ -18,17 +19,22 @@ namespace Core.Specifications
 
         public List<Expression<Func<T, object>>> Includes {get; } = 
             new List<Expression<Func<T, object>>>();
-
         public Expression<Func<T, object>> OrderBy {get; private set;}
 
         public Expression<Func<T, object>> OrderByDescending { get; private set; }
+        public List<string> IncludeStrings { get; } = new List<string>();
 
         public int Take { get; private set; }
 
         public int Skip { get; private set; }
 
-        public bool IsPagingEnabled { get; private set; }            
+        public bool IsPagingEnabled { get; private set; }
         
+        protected void AddInclude(string includeString)
+        {
+            IncludeStrings.Add(includeString);
+        }
+
         protected void AddInclude(Expression<Func<T, object>> includeExpression){
             Includes.Add(includeExpression);
         }
