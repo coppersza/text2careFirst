@@ -31,8 +31,8 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParams productSpecParams)
         {
-            var spec = new ProductsWithTypeStoreSpecification(productSpecParams);
-            var countSpec = new ProductsWithTypeStoreSpecificationCount(productSpecParams);
+            var spec = new ProductWithTypeStoreSpecification(productSpecParams);
+            var countSpec = new ProductWithTypeStoreSpecificationCount(productSpecParams);
             var totalItems = await _productRepo.CountAsync(countSpec);
 
             var products = await _productRepo.ListAsync(spec);
@@ -47,7 +47,7 @@ namespace API.Controllers
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
-            var spec = new ProductsWithTypeStoreSpecification(id);
+            var spec = new ProductWithTypeStoreSpecification(id);
             var product = await _productRepo.GetEntityWithSpec(spec);
             if (product == null) return NotFound(new ApiResponse(404));
             return _mapper.Map<Product, ProductToReturnDto>(product);

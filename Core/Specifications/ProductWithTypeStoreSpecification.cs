@@ -4,10 +4,10 @@ using Core.Entities;
 
 namespace Core.Specifications
 {
-    public class ProductsWithTypeStoreSpecification : BaseSpecification<Product>
+    public class ProductWithTypeStoreSpecification : BaseSpecification<Product>
     {
 
-        public ProductsWithTypeStoreSpecification(ProductSpecParams productSpecParams) 
+        public ProductWithTypeStoreSpecification(ProductSpecParams productSpecParams) 
             : base(x => 
                 (string.IsNullOrEmpty(productSpecParams.Search) || x.Name.ToLower().Contains(productSpecParams.Search)) &&
                 (!productSpecParams.ProductTypeId.HasValue || x.ProductTypeId == productSpecParams.ProductTypeId) && 
@@ -33,7 +33,7 @@ namespace Core.Specifications
             }
         }
 
-        public ProductsWithTypeStoreSpecification(int id) : base(x => x.Id == id)
+        public ProductWithTypeStoreSpecification(int id) : base(x => x.Id == id)
         {
             AddInclude(x => x.ProductType);
             AddInclude(x => x.Store);            

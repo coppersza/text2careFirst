@@ -6,38 +6,42 @@ namespace Infrastructure.Services
 {
     public class TokenService : ITokenService
     {
-        private readonly IUnitOfWork _unitOfWork;
 
-        public TokenService(IUnitOfWork unitOfWork)
+        private readonly IGenericRepository<Token> _tokenRepo;
+        private readonly IGenericRepository<Product> _productRepo;
+        
+
+        public TokenService(IGenericRepository<Token> tokenRepo,
+                            IGenericRepository<Product> productRepo)
         {
-            _unitOfWork = unitOfWork;
+            _tokenRepo = tokenRepo;
+            _productRepo = productRepo;
         }
 
-        public async Task<Token> CreateTokenAsync(string buyerEmail, Store store, ProductType productType, Product product)
+        public async Task<Token> CreateTokenAsync(string buyerEmail, string tokenName, int productId)
         {
             var tokenUid = Guid.NewGuid().ToString(); 
-            var tokenName = "Test";
-            var salesPrice = 0;
-            var costPrice = 0;          
+            var salesPrice = 0;     
+            var product = await _productRepo.GetByIdAsync(productId);
 
             //create order
-            var token = new Token(tokenUid, tokenName, buyerEmail, store, productType, product, salesPrice, costPrice);
+            var token = new Token(tokenUid, tokenName, buyerEmail, product, salesPrice, product.Price);
 
-            _unitOfWork.Repository<Token>().Add(token);
-            //save to db
-            var result = await _unitOfWork.Complete();
-            if (result <= 0) return null;
+            // _unitOfWork.Repository<Token>().Add(token);
+            // //save to db
+            // var result = await _unitOfWork.Complete();
+            // if (result <= 0) return null;
             
             //return the order
-            return token;
+            return token; 
         }
 
-        public Task<Token> GetTokenByIdAsync(int id, string buyerEmail)
+        Task<Token> ITokenService.GetTokenByIdAsync(int id, string buyerEmail)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IReadOnlyList<Token>> GetTokensForUserAsync(string buyerEmail)
+        Task<IReadOnlyList<Token>> ITokenService.GetTokensForUserAsync(string buyerEmail)
         {
             throw new NotImplementedException();
         }

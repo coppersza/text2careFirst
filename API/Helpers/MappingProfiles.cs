@@ -17,6 +17,7 @@ namespace API.Helpers
                 .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name))
                 .ForMember(d => d.Store, o => o.MapFrom(s => s.Store.StoreName))
                 .ForMember(d => d.ImageUrl, o => o.MapFrom<ProductUrlResolver>());
+
             CreateMap<Store, StoreToReturnDto>()
                 .ForMember(d => d.Country, o => o.MapFrom(s => s.Country.Name))
                 .ForMember(d => d.ImageUrl, o => o.MapFrom<StoreUrlResolver>());
@@ -37,10 +38,12 @@ namespace API.Helpers
 
             // CreateMap<Address, AddressDto>().ReverseMap();
             CreateMap<Core.Entities.Identity.Address, AddressDto>().ReverseMap();
+            CreateMap<AddressDto, Core.Entities.OrderAggregate.Address>();  
+
+            CreateMap<ProductDto, Product>();
 
             CreateMap<CustomerBasketDto, CustomerBasket>();
             CreateMap<BasketItemDto, BasketItem>();      
-            CreateMap<AddressDto, Core.Entities.OrderAggregate.Address>();  
                 
             CreateMap<Order, OrderToReturnDto>()
                 .ForMember(d => d.DeliveryMethod, o => o.MapFrom(s => s.DeliveryMethod.ShortName))

@@ -12,17 +12,16 @@ namespace Core.Entities
 
         public Token(string tokenUid, string tokenName, 
             string buyerEmail,             
-            Store store, 
-            ProductType productType, 
             Product product,
             decimal costPrice, decimal salesPrice)
         {
             TokenUid = tokenUid;
             TokenName = tokenName;
             BuyerEmail = buyerEmail;    
-
-            Store = store;
-            ProductType = productType;
+            Product = product;
+            StoreId = product.StoreId;
+            StoreUid = product.StoreUid;
+            ProductId = product.Id;
 
             CostPrice = costPrice;
             SalesPrice = salesPrice;
