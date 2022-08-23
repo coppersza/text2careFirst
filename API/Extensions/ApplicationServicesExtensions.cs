@@ -13,8 +13,11 @@ namespace API.Extensions
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));       
                      
             services.AddScoped<IBasketRepository, BasketRespository>();             
-            services.AddScoped<IUserTokenService, UserTokenService>();      
-            services.AddScoped<IOrderService, OrderService>();   
+            services.AddScoped<IUserTokenService, UserTokenService>();
+            
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ITokenService, TokenService>();   
+
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>(); 
             services.AddSingleton<IResponseCacheService, ResponseCacheService>();

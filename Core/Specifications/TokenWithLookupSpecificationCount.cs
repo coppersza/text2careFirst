@@ -7,7 +7,7 @@ namespace Core.Specifications
     {
         public TokenWithLookupSpecificationCount(TokenSpecParams specParams) : base(x => 
                 (string.IsNullOrEmpty(specParams.Search) || x.TokenName.ToLower().Contains(specParams.Search)) &&
-                (!specParams.TypeId.HasValue || x.ProductTypeId == specParams.TypeId) && 
+                (!specParams.ProductTypeId.HasValue || x.ProductTypeId == specParams.ProductTypeId) && 
                 (!specParams.StoreId.HasValue || x.StoreId == specParams.StoreId) && 
                 (!specParams.RecipientId.HasValue || x.RecipientId == specParams.RecipientId) && 
                 (!specParams.DonatorId.HasValue || x.DonatorId == specParams.DonatorId) )

@@ -31,6 +31,7 @@ namespace API.Helpers
             CreateMap<Token, TokenToReturnDto>()
                 .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name))
                 .ForMember(d => d.Store, o => o.MapFrom(s => s.Store.StoreName))
+                .ForMember(d => d.Product, o => o.MapFrom(s => s.Product.Name))
                 .ForMember(d => d.Recipient, o => o.MapFrom(s => s.Recipient.FullName))
                 .ForMember(d => d.Donator, o => o.MapFrom(s => s.Donator.FullName));
 

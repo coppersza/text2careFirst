@@ -497,6 +497,9 @@ namespace Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("BuyerEmail")
+                        .HasColumnType("TEXT");
+
                     b.Property<double>("CostPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -533,6 +536,9 @@ namespace Infrastructure.Data.Migrations
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("INTEGER");
@@ -582,6 +588,8 @@ namespace Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DonatorId");
+
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("ProductTypeId");
 
@@ -738,6 +746,12 @@ namespace Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Core.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Core.Entities.ProductType", "ProductType")
                         .WithMany()
                         .HasForeignKey("ProductTypeId")
@@ -757,6 +771,8 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Donator");
+
+                    b.Navigation("Product");
 
                     b.Navigation("ProductType");
 

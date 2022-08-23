@@ -6,9 +6,32 @@ namespace Core.Entities
 {
     public class Token : BaseEntity
     {
+        public Token()
+        {
+        }
+
+        public Token(string tokenUid, string tokenName, 
+            string buyerEmail,             
+            Store store, 
+            ProductType productType, 
+            Product product,
+            decimal costPrice, decimal salesPrice)
+        {
+            TokenUid = tokenUid;
+            TokenName = tokenName;
+            BuyerEmail = buyerEmail;    
+
+            Store = store;
+            ProductType = productType;
+
+            CostPrice = costPrice;
+            SalesPrice = salesPrice;
+        }
+
         [Column(TypeName = "char(38)")]
         [StringLength(38)]
         public string TokenUid { get; set; }   
+        public string TokenName { get; set; }
 
         [Column(TypeName = "char(38)")]
         [StringLength(38)]
@@ -16,8 +39,9 @@ namespace Core.Entities
         public int DonatorId { get; set; }
         public Donator Donator{ get; set; }
         public int UserId { get; set; }
+        public string BuyerEmail { get; set; }
         // public User User{ get; set; }     //TO DO   
-        public string TokenName { get; set; }
+        
 
         [Column(TypeName = "char(38)")]
         [StringLength(38)]
@@ -26,6 +50,8 @@ namespace Core.Entities
         public Store Store{ get; set; }
         public int ProductTypeId { get; set; }  
         public ProductType ProductType{ get; set; }              
+        public int ProductId { get; set; }  
+        public Product Product{ get; set; }               
 
         [Column(TypeName = "char(38)")]
         [StringLength(38)]
@@ -41,13 +67,13 @@ namespace Core.Entities
         public decimal SalesPrice { get; set; }
 
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-        public DateTime DateStoreAssigned { get; set; }
-        public DateTime DateAssigned { get; set; }
-        public DateTime DateCollected { get; set; }
-        public DateTime DateRelease { get; set; }
-        public DateTime DateExpire { get; set; }
-        public bool FoodCollected { get; set; }
-        public bool Valid { get; set; }
+        public DateTime DateStoreAssigned { get; set; } = DateTime.MinValue;
+        public DateTime DateAssigned { get; set; } = DateTime.MinValue;
+        public DateTime DateCollected { get; set; } = DateTime.MinValue;
+        public DateTime DateRelease { get; set; } = DateTime.UtcNow;
+        public DateTime DateExpire { get; set; } = DateTime.UtcNow.AddDays(60) ;
+        public bool FoodCollected { get; set; } = false;
+        public bool Valid { get; set; } = true;
         public string ImageUrl { get; set; }
         public string ShortUrl { get; set; }
         public string RecipientName { get; set; }

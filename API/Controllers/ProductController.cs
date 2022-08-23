@@ -55,7 +55,7 @@ namespace API.Controllers
         }
     
         [Cached(600)]
-        [HttpGet("type")]
+        [HttpGet("producttype")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
         {
             var productTypes = await _productTypeRepo.ListAllAsync();

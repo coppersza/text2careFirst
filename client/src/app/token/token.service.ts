@@ -38,7 +38,7 @@ export class TokenService {
       params = params.append('storeId', this.tokenParams.storeId.toString());
     }
     if (this.tokenParams.productTypeId !== 0){
-      params = params.append('typeId', this.tokenParams.productTypeId.toString());
+      params = params.append('productTypeId', this.tokenParams.productTypeId.toString());
     }
     if (this.tokenParams.search){
       params = params.append('search', this.tokenParams.search);
@@ -98,7 +98,7 @@ export class TokenService {
     if (this.productTypes.length > 0){
       return of(this.productTypes);
     }
-    return this.http.get<IProductType[]>(this.baseUrl + 'product/type').pipe(
+    return this.http.get<IProductType[]>(this.baseUrl + 'product/producttype').pipe(
       map(response => {
         this.productTypes = response;
         return response;

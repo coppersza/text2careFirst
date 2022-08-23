@@ -15,13 +15,17 @@ namespace Infrastructure.Data.Config
             builder.Property(t => t.SalesPrice).HasColumnType("decimal(18,2)");
 
             builder.HasOne(b => b.Donator).WithMany()
-                .HasForeignKey(t => t.DonatorId);         
+                .HasForeignKey(t => t.DonatorId);      
+            builder.HasOne(b => b.Recipient).WithMany()
+                .HasForeignKey(t => t.RecipientId);    
+
             builder.HasOne(b => b.Store).WithMany()
                 .HasForeignKey(t => t.StoreId);      
             builder.HasOne(b => b.ProductType).WithMany()
                 .HasForeignKey(t => t.ProductTypeId);       
-            builder.HasOne(b => b.Recipient).WithMany()
-                .HasForeignKey(t => t.RecipientId);                           
+                       
+            builder.HasOne(b => b.Product).WithMany()
+                .HasForeignKey(t => t.ProductId);                                  
         }
     }    
 }

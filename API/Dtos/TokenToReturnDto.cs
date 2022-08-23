@@ -13,7 +13,9 @@ namespace API.Dtos
 
         public string Store{ get; set; }
 
-        public string ProductType{ get; set; }              
+        public string ProductType{ get; set; }      
+
+        public string Product{ get; set; }
 
         public string Recipient{ get; set; }      
 

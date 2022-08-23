@@ -7,7 +7,7 @@ namespace Core.Specifications
     {
         public ProductsWithTypeStoreSpecificationCount(ProductSpecParams productSpecParams) : base(x =>
                 (string.IsNullOrEmpty(productSpecParams.Search) || x.Name.ToLower().Contains(productSpecParams.Search)) &&
-                (!productSpecParams.TypeId.HasValue || x.ProductTypeId == productSpecParams.TypeId) &&
+                (!productSpecParams.ProductTypeId.HasValue || x.ProductTypeId == productSpecParams.ProductTypeId) &&
                 (!productSpecParams.StoreId.HasValue || x.StoreId == productSpecParams.StoreId)
             )
         {
