@@ -1,4 +1,5 @@
 using System;
+using Core.Entities;
 
 namespace API.Dtos
 {
@@ -12,11 +13,11 @@ namespace API.Dtos
         public string TokenName { get; set; }
         public string BuyerEmail { get; set; }
 
-        public string Store{ get; set; }
+        public string StoreName{ get; set; }
 
-        public string ProductType{ get; set; }      
+        public string ProductTypeName{ get; set; }      
 
-        public string Product{ get; set; }
+        public string ProductName{ get; set; }
 
         public string Recipient{ get; set; }      
 

@@ -144,8 +144,8 @@ export class BasketService {
       price: item.price,
       imageUrl: item.imageUrl,
       quantity,
-      storeName: item.store,
-      productType: item.productType
+      storeName: item.storeName,
+      productType: item.productTypeName
     };
   }
 

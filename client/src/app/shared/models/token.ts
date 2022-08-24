@@ -2,10 +2,11 @@ export interface IToken {
   id: number;
   tokenUid: string;
   donator: string;
-  userId: number;
   tokenName: string;
-  store: string;
-  productType: string;
+  buyerEmail: string,
+  storeName: string;
+  productTypeName: string;
+  productName: string;
   recipient: string;
   costPrice: number;
   salesPrice: number;

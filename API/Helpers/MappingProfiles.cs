@@ -14,8 +14,8 @@ namespace API.Helpers
         public MappingProfiles()
         {
             CreateMap<Product, ProductToReturnDto>()
-                .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name))
-                .ForMember(d => d.Store, o => o.MapFrom(s => s.Store.StoreName))
+                .ForMember(d => d.ProductTypeName, o => o.MapFrom(s => s.ProductType.Name))
+                .ForMember(d => d.StoreName, o => o.MapFrom(s => s.Store.StoreName))
                 .ForMember(d => d.ImageUrl, o => o.MapFrom<ProductUrlResolver>());
 
             CreateMap<Store, StoreToReturnDto>()
@@ -30,9 +30,9 @@ namespace API.Helpers
                 .ForMember(d => d.Country, o => o.MapFrom(s => s.Country.Name));          
 
             CreateMap<Token, TokenToReturnDto>()
-                .ForMember(d => d.ProductType, o => o.MapFrom(s => s.Product.ProductType.Name))
-                .ForMember(d => d.Store, o => o.MapFrom(s => s.Store.StoreName))
-                .ForMember(d => d.Product, o => o.MapFrom(s => s.Product.Name))
+                .ForMember(d => d.ProductTypeName, o => o.MapFrom(s => s.Product.ProductType.Name))
+                .ForMember(d => d.StoreName, o => o.MapFrom(s => s.Store.StoreName))
+                .ForMember(d => d.ProductName, o => o.MapFrom(s => s.Product.Name))
                 .ForMember(d => d.Recipient, o => o.MapFrom(s => s.Recipient.FullName))
                 .ForMember(d => d.Donator, o => o.MapFrom(s => s.Donator.FullName));
 

@@ -50,7 +50,7 @@ namespace Infrastructure.Data
                     await context.SaveChangesAsync();
                 }
                 if (!context.Recipients.Any()){
-                    var jsonData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertRecipient.json");
+                    var jsonData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertRecipientFull.json");
                     var data = JsonSerializer.Deserialize<List<Recipient>>(jsonData);
                     foreach (var item in data)
                     {
@@ -77,7 +77,7 @@ namespace Infrastructure.Data
                     await context.SaveChangesAsync();
                 }    
                 if (!context.Tokens.Any()){
-                    var jsonData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertToken.json");
+                    var jsonData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertTokenFull.json");
                     var data = JsonSerializer.Deserialize<List<Token>>(jsonData);
                     foreach (var item in data)
                     {
