@@ -8,12 +8,13 @@ import { IToken } from '../shared/models/token';
 import { IProductType } from '../shared/models/productType';
 import { TokenParams } from '../shared/models/tokenParams';
 import { IStore } from '../shared/models/store';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
   tokens: IToken[] = [];
   stores: IStore[] = [];
   productTypes: IProductType[] = [];
@@ -47,7 +48,7 @@ export class TokenService {
     params = params.append('pageIndex', this.tokenParams.pageNumber.toString());
     params = params.append('pageSize', this.tokenParams.pageSize.toString());
 
-    return this.http.get<TokenPagination>(this.baseUrl + 'token', {observe: 'response', params})
+    return this.http.get<TokenPagination>(this.baseUrl + 'tokencontrolleruser', {observe: 'response', params})
       .pipe(
         map(response =>{
 
@@ -69,7 +70,7 @@ export class TokenService {
   getToken(id: number){
     let token: IToken;
     this.tokenCache.forEach((tokens: IToken[]) => {
-      
+
       token = tokens.find(p => p.id === id);
     })
     if (token){
@@ -79,7 +80,7 @@ export class TokenService {
     if (token){
       return of(token);
     }
-    return this.http.get<IToken>(this.baseUrl + 'token/' + id);
+    return this.http.get<IToken>(this.baseUrl + 'tokencontrolleruser/' + id);
 
   }
 

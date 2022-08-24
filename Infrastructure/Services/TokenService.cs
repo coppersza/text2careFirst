@@ -1,49 +1,64 @@
 using System;
 using Core.Entities;
 using Core.Interfaces;
+using Core.Specifications;
 
 namespace Infrastructure.Services
 {
     public class TokenService : ITokenService
     {
+        private readonly IUnitOfWork _unitOfWork;
 
-        private readonly IGenericRepository<Token> _tokenRepo;
-        private readonly IGenericRepository<Product> _productRepo;
-        
 
-        public TokenService(IGenericRepository<Token> tokenRepo,
-                            IGenericRepository<Product> productRepo)
+        public TokenService(IUnitOfWork unitOfWork)
         {
-            _tokenRepo = tokenRepo;
-            _productRepo = productRepo;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task<Token> CreateTokenAsync(string buyerEmail, string tokenName, int productId)
-        {
-            var tokenUid = Guid.NewGuid().ToString(); 
-            var salesPrice = 0;     
-            var product = await _productRepo.GetByIdAsync(productId);
-
-            //create order
-            var token = new Token(tokenUid, tokenName, buyerEmail, product, salesPrice, product.Price);
-
-            // _unitOfWork.Repository<Token>().Add(token);
-            // //save to db
-            // var result = await _unitOfWork.Complete();
-            // if (result <= 0) return null;
+        public async Task<Token> CreateOrUpdateTokenAsync(int tokenId, string tokenName, int productId, string buyerEmail)
+        {            
+            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(productId);
+            var token = await _unitOfWork.Repository<Token>().GetByIdAsync(tokenId);
             
-            //return the order
+            if (token == null){
+                var tokenUid = Guid.NewGuid().ToString().ToUpper(); 
+                token = new Token(tokenUid, tokenName, buyerEmail, product);
+                _unitOfWork.Repository<Token>().Add(token);
+                //save to db                             
+            }else{
+                token.TokenName = tokenName;
+                token.ProductId = productId;
+                _unitOfWork.Repository<Token>().Update(token);
+            }
+            var result = await _unitOfWork.Complete();   
+            if (result <= 0) return null;
             return token; 
         }
 
-        Task<Token> ITokenService.GetTokenByIdAsync(int id, string buyerEmail)
-        {
-            throw new NotImplementedException();
+        public async Task<IReadOnlyList<Token>> GetTokensForUserAsync(string buyerEmail)
+        {                       
+            var spec = new TokenWithLookupSpecification(buyerEmail);
+            return await _unitOfWork.Repository<Token>().ListAsync(spec);
         }
 
-        Task<IReadOnlyList<Token>> ITokenService.GetTokensForUserAsync(string buyerEmail)
+        public async Task<IReadOnlyList<Token>> GetTokensForUserAsync(string buyerEmail, TokenSpecParams specParams)
         {
-            throw new NotImplementedException();
+            var spec = new TokenWithLookupSpecification(buyerEmail, specParams);
+            var countSpec = new TokenWithLookupSpecificationCount(buyerEmail, specParams);
+            var data = await _unitOfWork.Repository<Token>().ListAsync(spec);
+            return data;        
+        }
+        public async Task<int> GetTokensForUserCountAsync(string buyerEmail, TokenSpecParams specParams)
+        {
+            var countSpec = new TokenWithLookupSpecificationCount(buyerEmail, specParams);
+            var totalItems = await _unitOfWork.Repository<Token>().CountAsync(countSpec);
+            return totalItems;        
+        }        
+
+        public async Task<Token> GetTokenByIdAsync(int id, string buyerEmail)
+        {
+            var spec = new TokenWithLookupSpecification(id, buyerEmail);
+            return await _unitOfWork.Repository<Token>().GetEntityWithSpec(spec);
         }
     }
 }

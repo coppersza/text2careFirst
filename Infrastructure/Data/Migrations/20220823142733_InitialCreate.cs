@@ -322,7 +322,6 @@ namespace Infrastructure.Data.Migrations
                     BuyerEmail = table.Column<string>(type: "TEXT", nullable: true),
                     StoreUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
                     StoreId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ProductTypeId = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductId = table.Column<int>(type: "INTEGER", nullable: false),
                     StoreMealUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
                     RecipientUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
@@ -355,12 +354,6 @@ namespace Infrastructure.Data.Migrations
                         name: "FK_Token_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Token_ProductType_ProductTypeId",
-                        column: x => x.ProductTypeId,
-                        principalTable: "ProductType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -446,11 +439,6 @@ namespace Infrastructure.Data.Migrations
                 name: "IX_Token_ProductId",
                 table: "Token",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Token_ProductTypeId",
-                table: "Token",
-                column: "ProductTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Token_RecipientId",

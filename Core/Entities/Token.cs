@@ -12,19 +12,21 @@ namespace Core.Entities
 
         public Token(string tokenUid, string tokenName, 
             string buyerEmail,             
-            Product product,
-            decimal costPrice, decimal salesPrice)
+            Product product)
         {
             TokenUid = tokenUid;
             TokenName = tokenName;
             BuyerEmail = buyerEmail;    
             Product = product;
-            StoreId = product.StoreId;
-            StoreUid = product.StoreUid;
             ProductId = product.Id;
-
-            CostPrice = costPrice;
-            SalesPrice = salesPrice;
+            StoreId = product.StoreId;
+            StoreUid = product.StoreUid;            
+            RecipientId = 1;
+            RecipientUid = "00000000-0000-0000-0000-000000000000";
+            DonatorId = 1;
+            DonatorUid = "00000000-0000-0000-0000-000000000000";
+            CostPrice = product.Price;
+            SalesPrice = 0;
         }
 
         [Column(TypeName = "char(38)")]
@@ -47,8 +49,8 @@ namespace Core.Entities
         public string StoreUid { get; set; }
         public int StoreId { get; set; }   
         public Store Store{ get; set; }
-        public int ProductTypeId { get; set; }  
-        public ProductType ProductType{ get; set; }              
+        // public int ProductTypeId { get; set; }  
+        // public ProductType ProductType{ get; set; }              
         public int ProductId { get; set; }  
         public Product Product{ get; set; }               
 

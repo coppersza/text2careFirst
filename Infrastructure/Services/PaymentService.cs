@@ -15,12 +15,14 @@ namespace Infrastructure.Services
         private readonly IBasketRepository _basketRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _config;
+        private readonly ITokenService _tokenService;
 
-        public PaymentService(IBasketRepository basketRepository, IUnitOfWork unitOfWork, IConfiguration config)
+        public PaymentService(IBasketRepository basketRepository, IUnitOfWork unitOfWork, IConfiguration config, ITokenService tokenService)
         {
             _basketRepository = basketRepository;
             _unitOfWork = unitOfWork;
             _config = config;
+            _tokenService = tokenService;
         }
 
         public async Task<CustomerBasket> CreateOrUpdatePaymentIntent(string basketId)
@@ -34,8 +36,7 @@ namespace Infrastructure.Services
             var shippingPrice = 0m;
 
             if (basket.DeliveryMethodId.HasValue){
-                var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>()
-                    .GetByIdAsync((int)basket.DeliveryMethodId);
+                var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync((int)basket.DeliveryMethodId);
                 shippingPrice = deliveryMethod.Price;
             }
             foreach(var item in basket.Items){
@@ -79,12 +80,31 @@ namespace Infrastructure.Services
         public async Task<Order> UpdateOrderPaymentSucceeded(string paymentIntentId)
         {
             var spec = new OrderByPaymentIntentIdSpecification(paymentIntentId);
-            var order = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+            var order = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);     
+            var buyerEmail = order.BuyerEmail;
+            var orderItems = order.OrderItems;
+            // var specItem = new OrdersWithItemsAndOrderingSpecification(paymentIntentId);
+            // var orderItem = await _unitOfWork.Repository<Order>().GetEntityWithSpec(specItem);  
 
             if (order == null) return null;
+
             order.Status = OrderStatus.PaymentReceived;
             _unitOfWork.Repository<Order>().Update(order);
             await _unitOfWork.Complete();
+
+            foreach(var item in orderItems){
+                // var orderItem = await _unitOfWork.Repository<OrderItem>().GetByIdAsync(item.Id);
+                // var ItemOrdered = orderItem.ItemOrdered;
+                var productId = item.ItemOrdered.ProductItemId;
+                var quantity = item.Quantity;
+                var tokenId = 0;
+                while (quantity > 0) {
+                    var tokenName = DateTime.Now.Date.ToShortDateString() + ":" + quantity.ToString();
+                    await _tokenService.CreateOrUpdateTokenAsync(tokenId, tokenName, productId, buyerEmail);
+                    quantity--;
+                }
+
+            }               
             return order;
         }
     }

@@ -17,7 +17,7 @@ namespace Core.Specifications
         public int? ProductTypeId { get; set; }
         public int? ProductId { get; set; }
         public int? RecipientId { get; set; }
-        public int? DonatorId { get; set; }        
+        public int? DonatorId { get; set; }
         public string Sort { get; set; }
 
         private string _search;

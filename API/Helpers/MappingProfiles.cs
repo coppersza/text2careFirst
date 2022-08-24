@@ -30,7 +30,7 @@ namespace API.Helpers
                 .ForMember(d => d.Country, o => o.MapFrom(s => s.Country.Name));          
 
             CreateMap<Token, TokenToReturnDto>()
-                .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name))
+                .ForMember(d => d.ProductType, o => o.MapFrom(s => s.Product.ProductType.Name))
                 .ForMember(d => d.Store, o => o.MapFrom(s => s.Store.StoreName))
                 .ForMember(d => d.Product, o => o.MapFrom(s => s.Product.Name))
                 .ForMember(d => d.Recipient, o => o.MapFrom(s => s.Recipient.FullName))
