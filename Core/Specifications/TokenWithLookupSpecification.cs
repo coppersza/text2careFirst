@@ -14,6 +14,7 @@ namespace Core.Specifications
         {
             AddInclude(x => x.Product);
             AddInclude("Product.Store");           
+            AddInclude("Product.ProductType"); 
 
             AddInclude(x => x.Recipient);
             AddInclude(x => x.Donator);
@@ -64,7 +65,8 @@ namespace Core.Specifications
                 (!specParams.DonatorId.HasValue || x.DonatorId == specParams.DonatorId) )
         {
             AddInclude(x => x.Product);
-            AddInclude("Product.Store");           
+            AddInclude("Product.Store");   
+            AddInclude("Product.ProductType");         
 
             AddInclude(x => x.Recipient);
             AddInclude(x => x.Donator);
