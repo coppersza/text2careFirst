@@ -28,6 +28,20 @@ SELECT `Token`.`TokenUid`,
 FROM `Text2CareDB`.`Token` INNER JOIN Donator ON Token.DonatorUidOld = Donator.DonatorUid
 INNER JOIN Recipient ON Token.RecipientUid = Recipient.RecipientUid;
 
+SELECT `StoreRecipient`.`StoreRecipientUid`,
+    `StoreRecipient`.`StoreUid`,
+    `Store`.`StoreId`,
+    `StoreRecipient`.`RecipientUid`,
+    `Recipient`.`RecipientId`,
+    `StoreRecipient`.`EmployeeUid`,
+    `Employee`.`EmployeeId`,
+    `StoreRecipient`.`DateRegistered`
+FROM `Text2CareDB`.`StoreRecipient`
+INNER JOIN Store ON StoreRecipient.StoreUid = Store.StoreUid
+INNER JOIN Recipient ON StoreRecipient.RecipientUid = Recipient.RecipientUid
+INNER JOIN Employee ON StoreRecipient.EmployeeUid = Employee.EmployeeUid;
+
+
 Update Token
 SET ImageUrl = "https://localhost:5001/images/tokens/hourglass.png"
 WHERE FoodCollected = 0

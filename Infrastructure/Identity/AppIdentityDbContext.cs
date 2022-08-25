@@ -1,4 +1,5 @@
 using System;
+using Core.Entities;
 using Core.Entities.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ namespace Infrastructure.Identity
         public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : base(options)
         {
         }
+        public DbSet<ApplicationUserStores> ApplicationUserStores { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

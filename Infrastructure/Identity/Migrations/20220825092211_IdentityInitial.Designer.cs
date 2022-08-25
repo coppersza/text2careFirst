@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Identity.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20220820065838_IdentityInitial")]
+    [Migration("20220825092211_IdentityInitial")]
     partial class IdentityInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,6 +17,32 @@ namespace Infrastructure.Identity.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.17");
+
+            modelBuilder.Entity("Core.Entities.ApplicationUserStores", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.Property<string>("ApplicationUserStoreUid")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.Property<int>("StoreId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("StoreUid")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ApplicationUserStores");
+                });
 
             modelBuilder.Entity("Core.Entities.Identity.Address", b =>
                 {

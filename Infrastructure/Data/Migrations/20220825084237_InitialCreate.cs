@@ -99,7 +99,7 @@ namespace Infrastructure.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    DonatorUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    DonatorUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
                     FirstName = table.Column<string>(type: "TEXT", nullable: true),
@@ -125,6 +125,7 @@ namespace Infrastructure.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Donator", x => x.Id);
+                    table.UniqueConstraint("AK_Donator_DonatorUid", x => x.DonatorUid);
                     table.ForeignKey(
                         name: "FK_Donator_Country_CountryId",
                         column: x => x.CountryId,
@@ -301,11 +302,11 @@ namespace Infrastructure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Product_Store_StoreId",
-                        column: x => x.StoreId,
+                        name: "FK_Product_Store_StoreUid",
+                        column: x => x.StoreUid,
                         principalTable: "Store",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "StoreUid",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -316,8 +317,11 @@ namespace Infrastructure.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     StoreRecipientUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
                     StoreUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    StoreId = table.Column<int>(type: "INTEGER", nullable: false),
                     RecipientUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    RecipientId = table.Column<int>(type: "INTEGER", nullable: false),
                     EmployeeUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    EmployeeId = table.Column<int>(type: "INTEGER", nullable: false),
                     DateRegistered = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -417,11 +421,11 @@ namespace Infrastructure.Data.Migrations
                 {
                     table.PrimaryKey("PK_Token", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Token_Donator_DonatorId",
-                        column: x => x.DonatorId,
+                        name: "FK_Token_Donator_DonatorUid",
+                        column: x => x.DonatorUid,
                         principalTable: "Donator",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "DonatorUid",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Token_Product_ProductId",
                         column: x => x.ProductId,
@@ -429,17 +433,17 @@ namespace Infrastructure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Token_Recipient_RecipientId",
-                        column: x => x.RecipientId,
+                        name: "FK_Token_Recipient_RecipientUid",
+                        column: x => x.RecipientUid,
                         principalTable: "Recipient",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "RecipientUid",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Token_Store_StoreId",
-                        column: x => x.StoreId,
+                        name: "FK_Token_Store_StoreUid",
+                        column: x => x.StoreUid,
                         principalTable: "Store",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "StoreUid",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -488,9 +492,9 @@ namespace Infrastructure.Data.Migrations
                 column: "ProductTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_StoreId",
+                name: "IX_Product_StoreUid",
                 table: "Product",
-                column: "StoreId");
+                column: "StoreUid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recipient_CountryId",
@@ -513,9 +517,9 @@ namespace Infrastructure.Data.Migrations
                 column: "StoreUid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Token_DonatorId",
+                name: "IX_Token_DonatorUid",
                 table: "Token",
-                column: "DonatorId");
+                column: "DonatorUid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Token_ProductId",
@@ -523,14 +527,14 @@ namespace Infrastructure.Data.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Token_RecipientId",
+                name: "IX_Token_RecipientUid",
                 table: "Token",
-                column: "RecipientId");
+                column: "RecipientUid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Token_StoreId",
+                name: "IX_Token_StoreUid",
                 table: "Token",
-                column: "StoreId");
+                column: "StoreUid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

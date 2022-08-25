@@ -10,8 +10,10 @@ namespace Infrastructure.Data
     public class StoreContextSeed
     {
         public static async Task SeedAsync(StoreContext context, ILoggerFactory loggerFactory){
+            var tempToken = "";
             try
             {
+                
                 var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 if (!context.ProductTypes.Any()){
                     var typesData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertProductType.json");
@@ -82,6 +84,7 @@ namespace Infrastructure.Data
                     foreach (var item in data)
                     {
                         context.Tokens.Add(item);
+                        tempToken = item.TokenUid;
                     }
                     await context.SaveChangesAsync();
                 }        
@@ -116,7 +119,7 @@ namespace Infrastructure.Data
             }
             catch(Exception ex){
                 var logger = loggerFactory.CreateLogger<StoreContextSeed>();
-                logger.LogError(ex.Message);
+                logger.LogError(tempToken + "----" + ex.Message);
             }                    
         }
     }

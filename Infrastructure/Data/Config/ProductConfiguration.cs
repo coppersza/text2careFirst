@@ -16,9 +16,14 @@ namespace Infrastructure.Data.Config
             
             builder.HasOne(b => b.ProductType).WithMany()
                 .HasForeignKey(p => p.ProductTypeId);
+
+            // builder.HasOne(b => b.Store).WithMany()
+            //     .HasForeignKey(p => p.StoreId);     
+
             builder.HasOne(b => b.Store).WithMany()
-                .HasForeignKey(p => p.StoreId);   
-                             
+                .HasPrincipalKey(p => p.StoreUid)
+                .HasForeignKey(p => p.StoreUid);
+                          
         }
     }
 }

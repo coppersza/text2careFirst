@@ -29,6 +29,7 @@ namespace Infrastructure.Data
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TokenMessage> TokenMessages { get; set; }
+        public DbSet<ApplicationUserStores> ApplicationUserStores { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

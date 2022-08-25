@@ -16,6 +16,32 @@ namespace Infrastructure.Identity.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.17");
 
+            modelBuilder.Entity("Core.Entities.ApplicationUserStores", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.Property<string>("ApplicationUserStoreUid")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.Property<int>("StoreId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("StoreUid")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ApplicationUserStores");
+                });
+
             modelBuilder.Entity("Core.Entities.Identity.Address", b =>
                 {
                     b.Property<int>("Id")

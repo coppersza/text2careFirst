@@ -58,6 +58,7 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("DonatorUid")
+                        .IsRequired()
                         .HasMaxLength(38)
                         .HasColumnType("char(38)");
 
@@ -307,7 +308,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasIndex("ProductTypeId");
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("StoreUid");
 
                     b.ToTable("Product");
                 });
@@ -502,13 +503,22 @@ namespace Infrastructure.Data.Migrations
                     b.Property<DateTime>("DateRegistered")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("EmployeeUid")
                         .HasMaxLength(38)
                         .HasColumnType("char(38)");
 
+                    b.Property<int>("RecipientId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("RecipientUid")
                         .HasMaxLength(38)
                         .HasColumnType("char(38)");
+
+                    b.Property<int>("StoreId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("StoreRecipientUid")
                         .HasMaxLength(38)
@@ -617,13 +627,13 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DonatorId");
+                    b.HasIndex("DonatorUid");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("RecipientId");
+                    b.HasIndex("RecipientUid");
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("StoreUid");
 
                     b.ToTable("Token");
                 });
@@ -815,9 +825,8 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasOne("Core.Entities.Store", "Store")
                         .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StoreUid")
+                        .HasPrincipalKey("StoreUid");
 
                     b.Navigation("ProductType");
 
@@ -867,9 +876,8 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.HasOne("Core.Entities.Donator", "Donator")
                         .WithMany()
-                        .HasForeignKey("DonatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DonatorUid")
+                        .HasPrincipalKey("DonatorUid");
 
                     b.HasOne("Core.Entities.Product", "Product")
                         .WithMany()
@@ -879,15 +887,13 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasOne("Core.Entities.Recipient", "Recipient")
                         .WithMany()
-                        .HasForeignKey("RecipientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RecipientUid")
+                        .HasPrincipalKey("RecipientUid");
 
                     b.HasOne("Core.Entities.Store", "Store")
                         .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StoreUid")
+                        .HasPrincipalKey("StoreUid");
 
                     b.Navigation("Donator");
 

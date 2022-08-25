@@ -8,6 +8,22 @@ namespace Infrastructure.Identity.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "ApplicationUserStores",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ApplicationUserStoreUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    ApplicationUserId = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    StoreUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    StoreId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationUserStores", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -226,6 +242,9 @@ namespace Infrastructure.Identity.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Address");
+
+            migrationBuilder.DropTable(
+                name: "ApplicationUserStores");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");

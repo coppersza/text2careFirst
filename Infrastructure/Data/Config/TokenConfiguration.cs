@@ -14,13 +14,26 @@ namespace Infrastructure.Data.Config
             builder.Property(t => t.CostPrice).HasColumnType("decimal(18,2)");
             builder.Property(t => t.SalesPrice).HasColumnType("decimal(18,2)");
 
-            builder.HasOne(b => b.Donator).WithMany()
-                .HasForeignKey(t => t.DonatorId);      
-            builder.HasOne(b => b.Recipient).WithMany()
-                .HasForeignKey(t => t.RecipientId);    
-                       
+               
             builder.HasOne(b => b.Product).WithMany()
-                .HasForeignKey(t => t.ProductId);                                  
+                .HasForeignKey(t => t.ProductId);    
+
+            // builder.HasOne(b => b.Donator).WithMany()
+            //     .HasForeignKey(p => p.DonatorId);
+            // builder.HasOne(b => b.Recipient).WithMany()
+            //     .HasForeignKey(p => p.RecipientId);  
+            // builder.HasOne(b => b.Store).WithMany()
+            //     .HasForeignKey(p => p.StoreId);
+
+            builder.HasOne(b => b.Donator).WithMany()
+                .HasPrincipalKey(p => p.DonatorUid)
+                .HasForeignKey(p => p.DonatorUid);
+            builder.HasOne(b => b.Recipient).WithMany()
+                .HasPrincipalKey(p => p.RecipientUid)
+                .HasForeignKey(p => p.RecipientUid);  
+            builder.HasOne(b => b.Store).WithMany()
+                .HasPrincipalKey(p => p.StoreUid)
+                .HasForeignKey(p => p.StoreUid);                                                                            
         }
     }    
 }
