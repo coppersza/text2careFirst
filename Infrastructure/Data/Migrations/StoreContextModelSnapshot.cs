@@ -396,6 +396,7 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("RecipientUid")
+                        .IsRequired()
                         .HasMaxLength(38)
                         .HasColumnType("char(38)");
 
@@ -475,6 +476,7 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("StoreUid")
+                        .IsRequired()
                         .HasMaxLength(38)
                         .HasColumnType("char(38)");
 
@@ -489,6 +491,40 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("Store");
+                });
+
+            modelBuilder.Entity("Core.Entities.StoreRecipient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DateRegistered")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EmployeeUid")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.Property<string>("RecipientUid")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.Property<string>("StoreRecipientUid")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.Property<string>("StoreUid")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipientUid");
+
+                    b.HasIndex("StoreUid");
+
+                    b.ToTable("StoreRecipient");
                 });
 
             modelBuilder.Entity("Core.Entities.Token", b =>
@@ -590,6 +626,86 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("StoreId");
 
                     b.ToTable("Token");
+                });
+
+            modelBuilder.Entity("Core.Entities.TokenMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DateSent")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EmailText")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsSent")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("MessageText")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MessageType")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TokenUid")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TokenMessage");
+                });
+
+            modelBuilder.Entity("Core.Entities.Transaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("CostPrice")
+                        .HasColumnType("REAL");
+
+                    b.Property<DateTime>("DatePurchased")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("DonatorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("DonatorUid")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("EmployeeUid")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.Property<int>("MealsPerMonth")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MealsPerWeek")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Recurring")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("StoreId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("StoreUid")
+                        .HasMaxLength(38)
+                        .HasColumnType("char(38)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("Core.Entities.Donator", b =>
@@ -728,6 +844,23 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("Core.Entities.StoreRecipient", b =>
+                {
+                    b.HasOne("Core.Entities.Recipient", "Recipient")
+                        .WithMany()
+                        .HasForeignKey("RecipientUid")
+                        .HasPrincipalKey("RecipientUid");
+
+                    b.HasOne("Core.Entities.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreUid")
+                        .HasPrincipalKey("StoreUid");
+
+                    b.Navigation("Recipient");
+
+                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("Core.Entities.Token", b =>

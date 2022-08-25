@@ -93,7 +93,25 @@ namespace Infrastructure.Data
                         context.DeliveryMethods.Add(item);
                     }
                     await context.SaveChangesAsync();
-                }                                                                
+                }       
+                if (!context.StoreRecipients.Any()){
+                    var jsonData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertStoreRecipientFull.json");
+                    var data = JsonSerializer.Deserialize<List<StoreRecipient>>(jsonData);
+                    foreach (var item in data)
+                    {
+                        context.StoreRecipients.Add(item);
+                    }
+                    await context.SaveChangesAsync();
+                }        
+                if (!context.TokenMessages.Any()){
+                    var jsonData = File.ReadAllText("../Infrastructure/Data/SeedData/InsertTokenMessageFull.json");
+                    var data = JsonSerializer.Deserialize<List<TokenMessage>>(jsonData);
+                    foreach (var item in data)
+                    {
+                        context.TokenMessages.Add(item);
+                    }
+                    await context.SaveChangesAsync();
+                }                                                                                            
                      
             }
             catch(Exception ex){

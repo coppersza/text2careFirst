@@ -52,6 +52,48 @@ namespace Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TokenMessage",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    TokenUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    MessageText = table.Column<string>(type: "TEXT", nullable: true),
+                    MessageType = table.Column<string>(type: "TEXT", nullable: true),
+                    EmailAddress = table.Column<string>(type: "TEXT", nullable: true),
+                    EmailText = table.Column<string>(type: "TEXT", nullable: true),
+                    DateSent = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsSent = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TokenMessage", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transaction",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    DonatorUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    DonatorId = table.Column<int>(type: "INTEGER", nullable: false),
+                    StoreUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    StoreId = table.Column<int>(type: "INTEGER", nullable: false),
+                    EmployeeUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    EmployeeId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CostPrice = table.Column<double>(type: "REAL", nullable: false),
+                    DatePurchased = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    MealsPerWeek = table.Column<int>(type: "INTEGER", nullable: false),
+                    MealsPerMonth = table.Column<int>(type: "INTEGER", nullable: false),
+                    Recurring = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transaction", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Donator",
                 columns: table => new
                 {
@@ -135,7 +177,7 @@ namespace Infrastructure.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    RecipientUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    RecipientUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
                     FirstName = table.Column<string>(type: "TEXT", nullable: true),
@@ -161,6 +203,7 @@ namespace Infrastructure.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Recipient", x => x.Id);
+                    table.UniqueConstraint("AK_Recipient_RecipientUid", x => x.RecipientUid);
                     table.ForeignKey(
                         name: "FK_Recipient_Country_CountryId",
                         column: x => x.CountryId,
@@ -175,7 +218,7 @@ namespace Infrastructure.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    StoreUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    StoreUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: false),
                     StoreName = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
@@ -200,6 +243,7 @@ namespace Infrastructure.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Store", x => x.Id);
+                    table.UniqueConstraint("AK_Store_StoreUid", x => x.StoreUid);
                     table.ForeignKey(
                         name: "FK_Store_Country_CountryId",
                         column: x => x.CountryId,
@@ -262,6 +306,35 @@ namespace Infrastructure.Data.Migrations
                         principalTable: "Store",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StoreRecipient",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    StoreRecipientUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    StoreUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    RecipientUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    EmployeeUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
+                    DateRegistered = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StoreRecipient", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StoreRecipient_Recipient_RecipientUid",
+                        column: x => x.RecipientUid,
+                        principalTable: "Recipient",
+                        principalColumn: "RecipientUid",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_StoreRecipient_Store_StoreUid",
+                        column: x => x.StoreUid,
+                        principalTable: "Store",
+                        principalColumn: "StoreUid",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -430,6 +503,16 @@ namespace Infrastructure.Data.Migrations
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StoreRecipient_RecipientUid",
+                table: "StoreRecipient",
+                column: "RecipientUid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StoreRecipient_StoreUid",
+                table: "StoreRecipient",
+                column: "StoreUid");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Token_DonatorId",
                 table: "Token",
                 column: "DonatorId");
@@ -462,7 +545,16 @@ namespace Infrastructure.Data.Migrations
                 name: "ProductItemOrdered");
 
             migrationBuilder.DropTable(
+                name: "StoreRecipient");
+
+            migrationBuilder.DropTable(
                 name: "Token");
+
+            migrationBuilder.DropTable(
+                name: "TokenMessage");
+
+            migrationBuilder.DropTable(
+                name: "Transaction");
 
             migrationBuilder.DropTable(
                 name: "OrderItem");

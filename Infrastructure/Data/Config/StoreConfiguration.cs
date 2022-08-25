@@ -13,6 +13,7 @@ namespace Infrastructure.Data.Config
             
             builder.HasOne(b => b.Country).WithMany()
                 .HasForeignKey(p => p.CountryId);
+              
           
         }
     }    

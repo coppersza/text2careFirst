@@ -61,8 +61,8 @@ namespace Core.Entities
         [Column(TypeName = "char(38)")]
         [StringLength(38)]
         public string RecipientUid { get; set; }
-        public int RecipientId { get; set; }      
-        public Recipient Recipient{ get; set; }      
+        public int RecipientId { get; set; }
+        public Recipient Recipient{ get; set; }
 
         public decimal CostPrice { get; set; }
         public decimal SalesPrice { get; set; }
