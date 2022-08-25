@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
+#nullable disable
+
 namespace Infrastructure.Identity.Migrations
 {
-    public partial class IdentityInitialPostGres : Migration
+    public partial class IdentityInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

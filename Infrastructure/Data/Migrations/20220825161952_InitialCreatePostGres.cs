@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
+#nullable disable
+
 namespace Infrastructure.Data.Migrations
 {
     public partial class InitialCreatePostGres : Migration
@@ -63,7 +65,7 @@ namespace Infrastructure.Data.Migrations
                     MessageType = table.Column<string>(type: "text", nullable: true),
                     EmailAddress = table.Column<string>(type: "text", nullable: true),
                     EmailText = table.Column<string>(type: "text", nullable: true),
-                    DateSent = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DateSent = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsSent = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -84,7 +86,7 @@ namespace Infrastructure.Data.Migrations
                     EmployeeUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
                     EmployeeId = table.Column<int>(type: "integer", nullable: false),
                     CostPrice = table.Column<decimal>(type: "numeric", nullable: false),
-                    DatePurchased = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DatePurchased = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     MealsPerWeek = table.Column<int>(type: "integer", nullable: false),
                     MealsPerMonth = table.Column<int>(type: "integer", nullable: false),
                     Recurring = table.Column<bool>(type: "boolean", nullable: false)
@@ -261,7 +263,7 @@ namespace Infrastructure.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     BuyerEmail = table.Column<string>(type: "text", nullable: true),
-                    OrderDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DeliveryMethodId = table.Column<int>(type: "integer", nullable: true),
                     Subtotal = table.Column<decimal>(type: "numeric", nullable: false),
                     Status = table.Column<string>(type: "text", nullable: false),
@@ -274,8 +276,7 @@ namespace Infrastructure.Data.Migrations
                         name: "FK_Order_DeliveryMethod_DeliveryMethodId",
                         column: x => x.DeliveryMethodId,
                         principalTable: "DeliveryMethod",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -306,8 +307,7 @@ namespace Infrastructure.Data.Migrations
                         name: "FK_Product_Store_StoreUid",
                         column: x => x.StoreUid,
                         principalTable: "Store",
-                        principalColumn: "StoreUid",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "StoreUid");
                 });
 
             migrationBuilder.CreateTable(
@@ -323,7 +323,7 @@ namespace Infrastructure.Data.Migrations
                     RecipientId = table.Column<int>(type: "integer", nullable: false),
                     EmployeeUid = table.Column<string>(type: "char(38)", maxLength: 38, nullable: true),
                     EmployeeId = table.Column<int>(type: "integer", nullable: false),
-                    DateRegistered = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    DateRegistered = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -332,14 +332,12 @@ namespace Infrastructure.Data.Migrations
                         name: "FK_StoreRecipient_Recipient_RecipientUid",
                         column: x => x.RecipientUid,
                         principalTable: "Recipient",
-                        principalColumn: "RecipientUid",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "RecipientUid");
                     table.ForeignKey(
                         name: "FK_StoreRecipient_Store_StoreUid",
                         column: x => x.StoreUid,
                         principalTable: "Store",
-                        principalColumn: "StoreUid",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "StoreUid");
                 });
 
             migrationBuilder.CreateTable(
@@ -405,12 +403,12 @@ namespace Infrastructure.Data.Migrations
                     RecipientId = table.Column<int>(type: "integer", nullable: false),
                     CostPrice = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     SalesPrice = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    DateStoreAssigned = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    DateAssigned = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    DateCollected = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    DateRelease = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    DateExpire = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateStoreAssigned = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateAssigned = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateCollected = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateRelease = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateExpire = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     FoodCollected = table.Column<bool>(type: "boolean", nullable: false),
                     Valid = table.Column<bool>(type: "boolean", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
@@ -425,8 +423,7 @@ namespace Infrastructure.Data.Migrations
                         name: "FK_Token_Donator_DonatorUid",
                         column: x => x.DonatorUid,
                         principalTable: "Donator",
-                        principalColumn: "DonatorUid",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "DonatorUid");
                     table.ForeignKey(
                         name: "FK_Token_Product_ProductId",
                         column: x => x.ProductId,
@@ -437,14 +434,12 @@ namespace Infrastructure.Data.Migrations
                         name: "FK_Token_Recipient_RecipientUid",
                         column: x => x.RecipientUid,
                         principalTable: "Recipient",
-                        principalColumn: "RecipientUid",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "RecipientUid");
                     table.ForeignKey(
                         name: "FK_Token_Store_StoreUid",
                         column: x => x.StoreUid,
                         principalTable: "Store",
-                        principalColumn: "StoreUid",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "StoreUid");
                 });
 
             migrationBuilder.CreateTable(
