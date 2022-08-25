@@ -1,0 +1,26 @@
+[
+	{
+		"Id" : 1,
+		"DonatorUid" : "00000000-0000-0000-0000-000000000000",
+		"FullName" : "Text2Care",
+		"Description" : "Text2Care",
+		"ImageUrl" : "images/products/1.jpg",
+        "CountryId" : 1
+	},
+	{
+		"Id" : 2,
+		"DonatorUid" : "7A3AEED2-65D1-453E-915F-A6813DE42513",
+		"FullName" : "CutTavern",
+		"Description" : "CutTavern",
+		"ImageUrl" : "images/products/2.jpg",
+        "CountryId" : 1
+	},
+	{
+		"Id" : 3,
+		"DonatorUid" : "18243AAD-BF0B-4622-B8A6-6049482B59E3",
+		"FullName" : "Adelaide Laser",
+		"Description" : "Adelaide Laser",
+		"ImageUrl" : "images/products/3.jpg",
+        "CountryId" : 1
+	}
+]

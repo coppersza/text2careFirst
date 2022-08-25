@@ -27,7 +27,7 @@ namespace Core.Entities
             DonatorUid = "00000000-0000-0000-0000-000000000000";
             CostPrice = product.Price;
             SalesPrice = 0;
-            ImageUrl = "https://localhost:5001/images/tokens/hourglass.png";
+            ImageUrl = "images/tokens/hourglass.png";
         }
 
         [Column(TypeName = "char(38)")]

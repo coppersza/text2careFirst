@@ -1,0 +1,35 @@
+[
+	{
+		"Id" : 1,
+		"StoreUid" : "00000000-0000-0000-0000-000000000000",
+		"StoreName" : "Random",
+		"Description" : "Random Description",
+		"ImageUrl" : "images/stores/random.jpg",
+		"FirstName" : "Random",
+		"Surname" : "Owner",
+		"FullName" : "Random Owner",        
+        "CountryId" : 1
+	},
+	{
+		"Id" : 2,
+		"StoreUid" : "A32AB0CB-40DA-4AB6-ADD9-FB20210BB308",
+		"StoreName" : "Just Chicken - Choice Plaza",
+		"Description" : "Just Chicken - Choice Plaza",
+		"ImageUrl" : "images/stores/justchicken.jpg",
+		"FirstName" : "Just Chicken",
+		"Surname" : "Owner",
+		"FullName" : "Just Chicken Owner",        
+        "CountryId" : 1
+	},
+	{
+		"Id" : 3,
+		"StoreUid" : "A4A5EDB5-DEBB-40E0-B991-B3D14A06E7F0",
+		"StoreName" : "Soul City Day Care",
+		"Description" : "Soul City Day Care desc",
+		"ImageUrl" : "images/stores/soul.jpg",
+		"FirstName" : "Soul City",
+		"Surname" : "Owner",
+		"FullName" : "Soul City Owner",
+        "CountryId" : 1
+	}
+]

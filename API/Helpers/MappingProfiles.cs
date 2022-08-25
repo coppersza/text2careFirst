@@ -34,7 +34,8 @@ namespace API.Helpers
                 .ForMember(d => d.StoreName, o => o.MapFrom(s => s.Store.StoreName))
                 .ForMember(d => d.ProductName, o => o.MapFrom(s => s.Product.Name))
                 .ForMember(d => d.Recipient, o => o.MapFrom(s => s.Recipient.FullName))
-                .ForMember(d => d.Donator, o => o.MapFrom(s => s.Donator.FullName));
+                .ForMember(d => d.Donator, o => o.MapFrom(s => s.Donator.FullName))
+                .ForMember(d => d.ImageUrl, o=> o.MapFrom<TokenUrlResolver>()); ;
 
             // CreateMap<Address, AddressDto>().ReverseMap();
             CreateMap<Core.Entities.Identity.Address, AddressDto>().ReverseMap();

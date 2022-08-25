@@ -1,8 +1,12 @@
 using System;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace API.Helpers
 {

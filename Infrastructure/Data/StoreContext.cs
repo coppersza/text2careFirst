@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Core.Entities.OrderAggregate;
+using System.Linq;
+using System;
 
 namespace Infrastructure.Data
 {
@@ -29,7 +31,6 @@ namespace Infrastructure.Data
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TokenMessage> TokenMessages { get; set; }
-        public DbSet<ApplicationUserStores> ApplicationUserStores { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

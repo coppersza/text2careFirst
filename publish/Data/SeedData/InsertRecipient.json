@@ -1,0 +1,26 @@
+[
+	{
+		"Id" : 1,
+		"RecipientUid" : "00000000-0000-0000-0000-000000000000",
+		"FullName" : "Random",
+		"Description" : "Random Description",
+		"ImageUrl" : "images/products/1.jpg",
+        "CountryId" : 1
+	},
+	{
+		"Id" : 2,
+		"RecipientUid" : "0044E1A4-23CF-4D2B-9ABA-96D30E12B6A0",
+		"FullName" : "Cheletsi Koloko",
+		"Description" : "Cheletsi Koloko",
+		"ImageUrl" : "images/products/2.jpg",
+        "CountryId" : 1
+	},
+	{
+		"Id" : 3,
+		"RecipientUid" : "00B56ADE-7A21-4A1E-8673-80E197233FCF",
+		"FullName" : "T7 (Ziwa, Khethelo, Wandile,Sisekelo)",
+		"Description" : "T7 (Ziwa, Khethelo, Wandile,Sisekelo)",
+		"ImageUrl" : "images/products/3.jpg",
+        "CountryId" : 1
+	}
+]

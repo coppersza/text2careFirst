@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using API.Dtos.Orders;
 using API.Dtos.Users;
 using API.Errors;

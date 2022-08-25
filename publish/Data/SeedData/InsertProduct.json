@@ -1,0 +1,101 @@
+[
+	{
+		"Id" : 1,
+		"Name" : "Meal",
+		"Description" : "Meal",
+		"Price" : 3.00,
+		"ImageUrl" : "images/products/random1.jpg",
+		"ProductTypeId" : 1,
+		"StoreId" : 1,
+		"StoreUid" : "00000000-0000-0000-0000-000000000000",
+		"IsActive" : true
+	},
+	{
+		"Id" : 2,
+		"Name" : "Sanitary",
+		"Description" : "Sanitary",
+		"Price" : 3.50,
+		"ImageUrl" : "images/products/random2.jpg",
+		"ProductTypeId" : 2,
+		"StoreId" : 1,
+		"StoreUid" : "00000000-0000-0000-0000-000000000000",
+		"IsActive" : true
+	},
+	{
+		"Id" : 3,
+		"Name" : "Accomodation",
+		"Description" : "Accomodation",
+		"Price" : 3.60,
+		"ImageUrl" : "images/products/bed.png",
+		"ProductTypeId" : 3,
+		"StoreId" : 1,
+		"StoreUid" : "00000000-0000-0000-0000-000000000000",
+		"IsActive" : true
+	},
+	{
+		"Id" : 4,
+		"Name" : "Pet Food",
+		"Description" : "Pet Food",
+		"Price" : 3.70,
+		"ImageUrl" : "images/products/gloria.jpg",
+		"ProductTypeId" : 4,
+		"StoreId" : 1,
+		"StoreUid" : "00000000-0000-0000-0000-000000000000",
+		"IsActive" : true
+	},
+	{
+		"Id" : 5,
+		"Name" : "Disaster Relief",
+		"Description" : "Disaster Relief",
+		"Price" : 3.00,
+		"ImageUrl" : "images/products/flood.jpg",
+		"ProductTypeId" : 5,
+		"StoreId" : 1,
+		"StoreUid" : "00000000-0000-0000-0000-000000000000",
+		"IsActive" : true
+	},
+	{
+		"Id" : 6,
+		"Name" : "Meal Just",
+		"Description" : "Meal",
+		"Price" : 3.10,
+		"ImageUrl" : "images/products/jc1.jpg",
+		"ProductTypeId" : 1,
+		"StoreId" : 2,
+		"StoreUid" : "A32AB0CB-40DA-4AB6-ADD9-FB20210BB308",
+		"IsActive" : true
+	},
+	{
+		"Id" : 7,
+		"Name" : "Sanitary Just",
+		"Description" : "Sanitary",
+		"Price" : 3.30,
+		"ImageUrl" : "images/products/jc2.jpg",
+		"ProductTypeId" : 2,
+		"StoreId" : 2,
+		"StoreUid" : "A32AB0CB-40DA-4AB6-ADD9-FB20210BB308",
+		"IsActive" : true
+	},
+	{
+		"Id" : 8,
+		"Name" : "Meal Soul",
+		"Description" : "Meal",
+		"Price" : 3.40,
+		"ImageUrl" : "images/products/soul1.jpg",
+		"ProductTypeId" : 1,
+		"StoreId" : 3,
+		"StoreUid" : "A4A5EDB5-DEBB-40E0-B991-B3D14A06E7F0",
+		"IsActive" : true
+	},
+	{
+		"Id" : 9,
+		"Name" : "Sanitary Soul",
+		"Description" : "Sanitary",
+		"Price" : 3.60,
+		"ImageUrl" : "images/products/soul2.jpg",
+		"ProductTypeId" : 2,
+		"StoreId" : 3,
+		"StoreUid" : "A4A5EDB5-DEBB-40E0-B991-B3D14A06E7F0",
+		"IsActive" : true
+	}
+]

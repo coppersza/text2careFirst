@@ -2,6 +2,7 @@ using System;
 using API.Dtos;
 using AutoMapper;
 using Core.Entities;
+using Microsoft.Extensions.Configuration;
 
 namespace API.Helpers
 {

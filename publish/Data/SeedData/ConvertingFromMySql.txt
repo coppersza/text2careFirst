@@ -1,0 +1,79 @@
+
+SELECT `Token`.`TokenUid`,
+	`Token`.`DonatorUid`,
+    `Token`.`DonatorId`,
+    Donator.EmailAddress AS BuyerEmail,
+    `Token`.`TokenName`,
+    `Token`.`StoreUid`,
+    `Token`.`StoreId`,
+    `Token`.`ProductId`,
+    `Token`.`StoreMealUid`,
+    `Token`.`RecipientUid`,
+    `Recipient`.`Id` AS RecipientId,
+    `Token`.`CostPrice`,
+    `Token`.`SalesPrice`,
+    DATE_FORMAT(`Token`.`DateCreated`, '%Y-%m-%dT%TZ') AS DateCreated,
+    DATE_FORMAT(`Token`.`DateStoreAssigned`, '%Y-%m-%dT%TZ') AS DateStoreAssigned,
+    DATE_FORMAT(`Token`.`DateAssigned`, '%Y-%m-%dT%TZ') AS DateAssigned,
+    DATE_FORMAT(`Token`.`DateCollected`, '%Y-%m-%dT%TZ') AS DateCollected,
+    DATE_FORMAT(`Token`.`DateRelease`, '%Y-%m-%dT%TZ') AS DateRelease,
+    DATE_FORMAT(`Token`.`DateExpire`, '%Y-%m-%dT%TZ') AS DateExpire,
+    `Token`.`FoodCollected`,
+    `Token`.`ImageUrl`,
+    `Token`.`ShortUrl`,
+    `Token`.`Valid`,
+    `Token`.`RecipientName`,
+    `Token`.`DonatorName`
+    
+FROM `Text2CareDB`.`Token` INNER JOIN Donator ON Token.DonatorUidOld = Donator.DonatorUid
+INNER JOIN Recipient ON Token.RecipientUid = Recipient.RecipientUid;
+
+SELECT `StoreRecipient`.`StoreRecipientUid`,
+    `StoreRecipient`.`StoreUid`,
+    `Store`.`StoreId`,
+    `StoreRecipient`.`RecipientUid`,
+    `Recipient`.`RecipientId`,
+    `StoreRecipient`.`EmployeeUid`,
+    `Employee`.`EmployeeId`,
+    `StoreRecipient`.`DateRegistered`
+FROM `Text2CareDB`.`StoreRecipient`
+INNER JOIN Store ON StoreRecipient.StoreUid = Store.StoreUid
+INNER JOIN Recipient ON StoreRecipient.RecipientUid = Recipient.RecipientUid
+INNER JOIN Employee ON StoreRecipient.EmployeeUid = Employee.EmployeeUid;
+
+
+Update Token
+SET ImageUrl = "https://localhost:5001/images/tokens/hourglass.png"
+WHERE FoodCollected = 0
+AND ImageUrl = "";
+Update Token
+SET ImageUrl = "https://localhost:5001/images/tokens/received.png"
+WHERE FoodCollected = 1
+AND ImageUrl = "";
+
+UPDATE Token
+SET StoreId = 2,
+ProductId = 6
+WHERE StoreUid = 'A32AB0CB-40DA-4AB6-ADD9-FB20210BB308';
+
+UPDATE Token
+SET StoreId = 3,
+ProductId = 8
+WHERE StoreUid = 'A4A5EDB5-DEBB-40E0-B991-B3D14A06E7F0';
+
+SELECT Token.*, Donator.EmailAddress AS BuyerEmail FROM 
+Token INNER JOIN Donator ON Token.DonatorUidOld = Donator.DonatorUid
+Update Token
+SET DonatorUidOld = DonatorUid,
+DonatorId = 1
+
+Update Token
+SET DonatorUid = '00000000-0000-0000-0000-000000000000',
+DonatorId = 1;
+Update Token
+SET DonatorUidOld = DonatorUid,
+DonatorId = 1
+
+Update Token
+SET DonatorUid = 00000000-0000-0000-0000-000000000000',
+DonatorId = 1;
