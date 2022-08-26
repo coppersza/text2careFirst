@@ -1,0 +1,13 @@
+Update "Token"
+SET 
+"ImageUrl" = 'https://text2carestorage.blob.core.windows.net:443/images/FF346E05-FC4E-4F99-85DC-29CFDF8E462A.jpg',
+"FoodCollected" = true, 
+"RecipientName" = 'TestRecipient'
+WHERE "Token"."Id" = 648
+
+Update "Token"
+SET 
+"ImageUrl" = 'https://text2carestorage.blob.core.windows.net:443/images/14CA2051-66CC-46DF-AD55-F6D3993B7B9C.jpg',
+"FoodCollected" = true, 
+"RecipientName" = 'TestRecipient'
+WHERE "Token"."Id" = 647
