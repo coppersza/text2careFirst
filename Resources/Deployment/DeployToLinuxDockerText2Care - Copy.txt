@@ -3,12 +3,12 @@ Deploy to Linux using Docker - for use with .Net 5.0
 
 1. Create a new droplet with Digital Ocean using the Docker 19.03.12 on Ubuntu 20.04
 
-IP address: 138.68.160.167
+IP address: 46.101.32.122
 Password for root user: Mario13Bros
 
 2. Login to the droplet using either the terminal or Powershell:
 
-ssh root@138.68.160.167
+ssh root@46.101.32.122
 
 You will be asked for your password.   Enter this.
 
@@ -24,7 +24,11 @@ services:
     image: redis:latest
     ports:
       - 6379:6379
-    command: redis-server --include /usr/local/etc/redis/redis.conf --appendonly yes
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+
+    command: redis-server --include /usr/local/etc/redis/redis.conf
     volumes:
       - redis-data:/data
       - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
@@ -78,7 +82,7 @@ sudo systemctl status apache2
 sudo ufw allow 8080/tcp
 sudo ufw allow 8081/tcp
 
-8.  Test you can access the default apache page by browsing to:  http://138.68.160.167
+8.  Test you can access the default apache page by browsing to:  http://46.101.32.122
 
 9.  Create a new directory that will contain our published dotnet app and assign rights to the user:
 
@@ -128,7 +132,7 @@ systemctl reload apache2
                 "name": "Linux",
                 "description": "SFTP folder",
 
-                "host": "138.68.160.167", "port": 22,
+                "host": "46.101.32.122", "port": 22,
                 "user": "root", "password": "Mario13Bros",
 
                 "dir": "/var/text2care",
@@ -160,7 +164,7 @@ dotnet publish -c Release -o publish text2care.sln
 
 17.  Add an endpoint to stripe for to point to the IP address of the server and select the 2 events we want to listen to:  payment_intent.succeeded, payment_intent.payment_failed.  Note the web hook secret as we will need this soon.
 
-http://138.68.160.167/api/payments/webhook
+http://46.101.32.122/api/payments/webhook
 
 18.  Back on the linux server create a service config for the kestrel server:
 
@@ -179,14 +183,14 @@ SyslogIdentifier=text2care
 User=www-data
 Environment=ASPNETCORE_ENVIRONMENT=Production
 Environment='Token__Key=super secret key'
-Environment='Token__Issuer=http://138.68.160.167'
+Environment='Token__Issuer=http://46.101.32.122'
 Environment='StripeSettings__PublishibleKey=pk_test_51LZYe2CscCsr6cFbtilkcSSD5vEWMetppMmtSdvGDEpy9ClY7j0UkgxT8ERrAMxdmGH1NRnD3iRPhZ07rdb0Hboi00dvc9AcdW'
 Environment='StripeSettings__SecretKey=sk_test_51LZYe2CscCsr6cFbpn6JwHJ2LcRtmcezqlhnttIa8i0rRLbniMp9VRlmvcsgOqkSULO7g1M0IbB4VVJ7zoDurAc2001Vil2vLt'
-Environment='StripeSettings__WhSecret=whsec_DmsidROssBPj0xBF2qDpYqVslmr9Gvm3'
+Environment='StripeSettings__WhSecret=whsec_z2kPGxIEmAA5YxxgXTnezfhMwEpqbXdc'
 Environment='ConnectionStrings__DefaultConnection=Server=localhost;Port=5432;User Id=rootuser;Password=Mario13Bros; Database=text2care'
 Environment='ConnectionStrings__IdentityConnection=Server=localhost;Port=5432;User Id=rootuser;Password=Mario13Bros; Database=identity'
 Environment='ConnectionStrings__Redis=localhost'
-Environment='ApiUrl=http://138.68.160.167/Content/'
+Environment='ApiUrl=http://46.101.32.122/Content/'
 [Install]
 WantedBy=multi-user.target
 
@@ -241,49 +245,7 @@ netstat -ntpl
 
 journalctl -u text2care-web.service --since "5 min ago"
 
-25.  Make sure there are no errors and then test you can browse to the published app on http://138.68.160.167
-
-
-26. 
-https://docs.digitalocean.com/products/networking/dns/quickstart/
-https://cloud.digitalocean.com/networking/domains/pennydodo.com?i=a001f1
-
-https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-ubuntu-20-04
-
-sudo apt install certbot python3-certbot-apache
-
-sudo nano /etc/apache2/sites-available/text2care.conf
-
-<VirtualHost *:80>
-    ServerAdmin webmaster@localhost
-    ProxyPreserveHost On
-    ProxyPass / http://127.0.0.1:5000/
-    ProxyPassReverse / http://127.0.0.1:5000
-	ServerName pennydodo.com
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-
-systemctl reload apache2
-
-Change ip addresses
-sudo nano /etc/systemd/system/text2care-web.service
-
-systemctl daemon-reload
-systemctl restart text2care-web.service
-
-sudo apache2ctl configtest
-sudo systemctl reload apache2
-
-sudo ufw status
-
-sudo certbot --apache
-robert.copley@gmail.com
-Agree
-No
-
-
-https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-20-04
+25.  Make sure there are no errors and then test you can browse to the published app on http://46.101.32.122
 
 
 docker container ls
