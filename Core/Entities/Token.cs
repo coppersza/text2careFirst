@@ -41,8 +41,11 @@ namespace Core.Entities
         public int DonatorId { get; set; }
         public Donator Donator{ get; set; }
         public string BuyerEmail { get; set; }
-        // public User User{ get; set; }     //TO DO   
-        
+
+        // [Column(TypeName = "char(38)")]
+        // [StringLength(38)]
+        // public string UserUid { get; set; }        
+        // public User User{ get; set; }     //TO DO           
 
         [Column(TypeName = "char(38)")]
         [StringLength(38)]

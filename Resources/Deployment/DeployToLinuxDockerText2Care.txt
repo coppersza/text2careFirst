@@ -1,6 +1,8 @@
 Deploy to Linux using Docker - for use with .Net 5.0
 ====================================================
 
+dotnet publish -c Release -o publish text2care.sln
+
 1. Create a new droplet with Digital Ocean using the Docker 19.03.12 on Ubuntu 20.04
 
 IP address: 138.68.160.167
@@ -62,6 +64,15 @@ volumes:
 5.  Run the following command to start the docker services
 
 docker-compose up -d
+
+sudo nano redis.conf
+sudo docker exec -it root_redis_1 sh
+config set bind 127.0.0.1
+apt install redis-tools
+docker start ff5ff5c166fc
+docker start 688ec54f3373
+
+docker run redis
 
 6.  Install and configure apache by running the following commands:
 

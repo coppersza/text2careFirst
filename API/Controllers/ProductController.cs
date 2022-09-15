@@ -30,7 +30,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [Cached(600)]
+        // [Cached(600)]
         [HttpGet]
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParams productSpecParams)
         {
@@ -44,7 +44,7 @@ namespace API.Controllers
             return Ok(new Pagination<ProductToReturnDto>(productSpecParams.PageIndex, productSpecParams.PageSize, totalItems, dataMap));
         }
 
-        [Cached(600)]
+        // [Cached(600)]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
@@ -57,7 +57,7 @@ namespace API.Controllers
 
         }
     
-        [Cached(600)]
+        // [Cached(600)]
         [HttpGet("producttype")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
         {

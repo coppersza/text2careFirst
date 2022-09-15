@@ -12,12 +12,28 @@ builder.Services.AddDbContext<StoreContext>(x =>
     x.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<AppIdentityDbContext>(x => 
 x.UseNpgsql(builder.Configuration.GetConnectionString("IdentityConnection")));   
-
 builder.Services.AddSingleton<IConnectionMultiplexer>(c => {
     var configuration = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"), true);
+    configuration.ClientName = "Text2CareApp-RedisCacheProvider";
+    configuration.ReconnectRetryPolicy = new ExponentialRetry(5000, 10000);
     return ConnectionMultiplexer.Connect(configuration);
 });
 
+// try
+// {
+//     builder.Services.AddSingleton<IConnectionMultiplexer>(c => {
+//         var configuration = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"), true);
+//         configuration.ClientName = "Text2CareApp-RedisCacheProvider";
+//         configuration.ReconnectRetryPolicy = new ExponentialRetry(5000, 10000);
+//         return ConnectionMultiplexer.Connect(configuration);
+
+//     });
+// }catch (Exception e)
+// {
+//     // No connection (requires writable - not eligible for replica) is active/available to service this operation: SETEX /api/store, mc: 1/1/0, mgr: 10 of 10 available, clientName: Text2CareApp-RedisCacheProvider, IOCP: (>
+//     // Sep 06 13:14:46 text2careDroplet text2care[1862]:       StackExchange.Redis.RedisConnectionException: No connection (requires writable - not eligible for replica) is active/available to service this operation: SETEX /api/store, mc: 1/1/0, mgr: 10 of 10 available, client    
+//     Console.WriteLine("{0} Exception caught.", e);
+// }
 
 builder.Services.AddApplicationServices();
 builder.Services.AddIdentityServices(builder.Configuration);
