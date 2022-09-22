@@ -11,8 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<StoreContext>(x =>
     x.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<AppIdentityDbContext>(x => 
-x.UseNpgsql(builder.Configuration.GetConnectionString("IdentityConnection")));   
-builder.Services.AddSingleton<IConnectionMultiplexer>(c => {
+x.UseNpgsql(builder.Configuration.GetConnectionString("IdentityConnection")));
+
+builder.Services.AddSingleton<IConnectionMultiplexer, ConnectionMultiplexer>(c => {
     var configuration = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"), true);
     configuration.ClientName = "Text2CareApp-RedisCacheProvider";
     configuration.ReconnectRetryPolicy = new ExponentialRetry(5000, 10000);

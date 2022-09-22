@@ -11,7 +11,7 @@ Password for root user: Mario13Bros
 2. Login to the droplet using either the terminal or Powershell:
 
 ssh root@138.68.160.167
-
+Mario13Bros
 You will be asked for your password.   Enter this.
 
 3.  Create a new docker-compose file using the following command:
@@ -297,6 +297,10 @@ No
 https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-20-04
 
 
-docker container ls
+docker container ls -a
 sudo shutdown -r now 'System maintenance'
  docker restart root_redis_1
+ docker restart root_redis-commander_1
+
+ssh root@138.68.160.167
+Mario13Bros
