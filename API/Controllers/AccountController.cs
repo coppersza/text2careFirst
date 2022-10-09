@@ -43,8 +43,9 @@ namespace API.Controllers
             var user = await _userManager.FindUserByClaimsPrincipleAsync(User);
             var user2 = await _userManager.FindUserByClaimsPrincipleAsync(HttpContext.User);
             return new UserDto{
+                Id = user.Id,
                 Email = user.Email,
-                Token = _userTokenService.CreateToken(user),
+                Token = _userTokenService.CreateUserToken(user),
                 DisplayName = user.DisplayName
             };
         }
@@ -87,8 +88,9 @@ namespace API.Controllers
             if (!result.Succeeded) return Unauthorized(new ApiResponse(401));
 
             return new UserDto{
+                Id = user.Id,
                 Email = user.Email,
-                Token = _userTokenService.CreateToken(user),
+                Token = _userTokenService.CreateUserToken(user),
                 DisplayName = user.DisplayName
             };
         }
@@ -109,8 +111,9 @@ namespace API.Controllers
             if (!result.Succeeded) return BadRequest(new ApiResponse(400));
 
             return new UserDto{
+                Id = user.Id,
                 DisplayName = user.DisplayName,
-                Token = _userTokenService.CreateToken(user),
+                Token = _userTokenService.CreateUserToken(user),
                 Email = user.Email
             };
 

@@ -17,8 +17,8 @@
                 "name": "Linux",
                 "description": "SFTP folder",
 
-                "host": "138.68.160.167", "port": 22,
-                "user": "root", "password": "Mario13Bros",
+                "host": "167.172.55.49", "port": 22,
+                "user": "root", "password": "M@rio13Bros",
 
                 "dir": "/var/text2care",
                 "mappings": {

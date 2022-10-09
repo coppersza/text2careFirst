@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Core.Entities.Identity;
 
 namespace Core.Entities
 {
@@ -11,7 +12,8 @@ namespace Core.Entities
         }
 
         public Token(string tokenUid, string tokenName, 
-            string buyerEmail,             
+            string buyerEmail,
+            string donatorUid,
             Product product)
         {
             TokenUid = tokenUid;
@@ -40,20 +42,16 @@ namespace Core.Entities
         public string DonatorUid { get; set; }
         public int DonatorId { get; set; }
         public Donator Donator{ get; set; }
-        public string BuyerEmail { get; set; }
-
-        // [Column(TypeName = "char(38)")]
-        // [StringLength(38)]
-        // public string UserUid { get; set; }        
-        // public User User{ get; set; }     //TO DO           
+        public string BuyerEmail { get; set; }       
+        public string AppUserId { get; set; }
+        public AppUser AppUser { get; set; }            
 
         [Column(TypeName = "char(38)")]
         [StringLength(38)]
         public string StoreUid { get; set; }
         public int StoreId { get; set; }   
-        public Store Store{ get; set; }
-        // public int ProductTypeId { get; set; }  
-        // public ProductType ProductType{ get; set; }              
+        public Store Store{ get; set; }        
+        
         public int ProductId { get; set; }  
         public Product Product{ get; set; }               
 

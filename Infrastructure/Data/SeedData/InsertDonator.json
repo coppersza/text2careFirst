@@ -4,6 +4,7 @@
 		"DonatorUid" : "00000000-0000-0000-0000-000000000000",
 		"FullName" : "Text2Care",
 		"Description" : "Text2Care",
+        "EmailAddress" : "",
 		"ImageUrl" : "images/products/1.jpg",
         "CountryId" : 1
 	},

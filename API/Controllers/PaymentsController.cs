@@ -22,7 +22,6 @@ namespace API.Controllers
         private readonly IPaymentService _paymentService;
         private readonly ILogger<PaymentsController> _logger;
         private readonly string _webHookSecret;
-        private string _email;
 
         public PaymentsController(IPaymentService paymentService, ILogger<PaymentsController> logger, IConfiguration config)
         {
@@ -37,7 +36,6 @@ namespace API.Controllers
         [HttpPost("{basketid}")]
         public async Task<ActionResult<CustomerBasket>> CreateOrUpdatePaymentIntent(string basketId)
         {
-            _email = HttpContext.User.RetrieveEmailFromPrincipal();
             var basket = await _paymentService.CreateOrUpdatePaymentIntent(basketId);
             if (basket == null) return BadRequest(new ApiResponse(400, "Problem with your basket"));
             return basket;

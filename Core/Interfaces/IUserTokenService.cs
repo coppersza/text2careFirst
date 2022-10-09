@@ -5,6 +5,6 @@ namespace Core.Interfaces
 {
     public interface IUserTokenService
     {
-        string CreateToken(AppUser user);    
+        string CreateUserToken(AppUser user);    
     }
 }

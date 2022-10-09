@@ -13,5 +13,9 @@ namespace Core.Specifications
         {
             AddInclude(x => x.Country);
         }
+        public DonatorWithCountrySpecification(string email) : base(x => x.EmailAddress == email)
+        {
+            AddInclude(x => x.Country);
+        }        
     }          
 }

@@ -6,6 +6,7 @@ using Core.Entities;
 using Core.Entities.OrderAggregate;
 using Core.Interfaces;
 using Core.Specifications;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Stripe;
 using Order = Core.Entities.OrderAggregate.Order;
@@ -85,6 +86,7 @@ namespace Infrastructure.Services
             var spec = new OrderByPaymentIntentIdSpecification(paymentIntentId);
             var order = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);     
             var buyerEmail = order.BuyerEmail;
+            
             var orderItems = order.OrderItems;
             // var specItem = new OrdersWithItemsAndOrderingSpecification(paymentIntentId);
             // var orderItem = await _unitOfWork.Repository<Order>().GetEntityWithSpec(specItem);  
@@ -106,8 +108,7 @@ namespace Infrastructure.Services
                     await _tokenService.CreateOrUpdateTokenAsync(tokenId, tokenName, productId, buyerEmail);
                     quantity--;
                 }
-
-            }               
+            }
             return order;
         }
     }

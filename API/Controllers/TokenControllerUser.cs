@@ -26,7 +26,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<ActionResult<Token>> CreateToken(TokenDto tokenDto){
+        public async Task<ActionResult<Token>> CreateUserToken(TokenDto tokenDto){
             var email = HttpContext.User.RetrieveEmailFromPrincipal();
             // var product = _mapper.Map<ProductDto, Product>(tokenDto.Product);
             var productId = tokenDto.ProductId;

@@ -11,7 +11,7 @@ namespace Core.Entities
            
         [Column(TypeName = "char(38)")]
         [StringLength(38)]
-        public string ApplicationUserId { get; set; }     
+        public string ApplicationUserId { get; set; }
 
         [Column(TypeName = "char(38)")]
         [StringLength(38)]

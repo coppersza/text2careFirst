@@ -1,0 +1,230 @@
+1. Create a new droplet with Digital Ocean using the Docker 19.03.12 on Ubuntu 20.04
+
+text2careDroplet
+IP address: 167.172.55.49
+Password for root user: M@rio13Bros
+ssh root@167.172.55.49
+
+
+2. Install Redis
+sudo apt update
+sudo apt install redis-server
+sudo nano /etc/redis/redis.conf
+# Note: these supervision methods only signal "process is ready."
+#       They do not enable continuous liveness pings back to your supervisor.
+supervised systemd
+sudo systemctl restart redis.service
+
+
+3.  Create a new docker-compose file using the following command:
+
+sudo nano docker-compose.yml
+
+4.  Copy and paste in the docker-compose configuration:
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: Mario13Bros
+      POSTGRES_USER: rootuser
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+          
+volumes:
+  postgres-data:
+
+
+5.  Run the following command to start the docker services
+
+docker-compose up -d
+
+6.  Install and configure apache by running the following commands:
+
+sudo apt update
+sudo apt install apache2
+a2enmod proxy proxy_http proxy_html rewrite
+systemctl restart apache2
+sudo ufw app list
+sudo ufw allow 'Apache Full'
+sudo systemctl status apache2
+http://167.172.55.49
+
+7.   Optional - allow the ports through the firewall to allow you to manage PostGreSQL and Redis via the ports.
+
+sudo ufw allow 8080/tcp
+sudo ufw allow 8081/tcp
+
+9.  Create a new directory that will contain our published dotnet app and assign rights to the user:
+
+sudo mkdir /var/text2care
+sudo chown -R $USER:$USER /var/text2care
+
+10.  Create a new config file for the text2care app:
+
+sudo nano /etc/apache2/sites-available/text2care.conf
+
+11.  Paste in the following configuration which will set up a reverse proxy with the Kestrel server:
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ProxyPreserveHost On
+    ProxyPass / http://127.0.0.1:5000/
+    ProxyPassReverse / http://127.0.0.1:5000
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+12.  Enable the text2care site by running the following commands:
+
+a2ensite text2care
+ls /etc/apache2/sites-enabled
+a2dissite 000-default
+systemctl reload apache2
+
+13.  Install the deploy reloaded extension.   Create a settings.json file in the .vscode directory and update the IP address and password for your server:
+
+{
+    "deploy.reloaded": {
+        "packages": [
+            {
+                "name": "Version 1.0.0",
+                "description": "Package version 1.0.0",
+
+                "files": [
+                    "publish/**"
+                ]
+            }
+        ],
+
+        "targets": [
+            {
+                "type": "sftp",
+                "name": "Linux",
+                "description": "SFTP folder",
+
+                "host": "167.172.55.49", "port": 22,
+                "user": "root", "password": "Mario13Bros",
+
+                "dir": "/var/text2care",
+                "mappings": {
+                    "publish/**": "/"
+                }
+            }
+        ]
+    }
+}
+
+
+14.  Optional - Change the logging level for the appsettings.json to information for the Microsoft logging level:
+
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Information",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+}
+
+15.  Republish the app with changes by running the following command in VS Code terminal:
+
+dotnet publish -c Release -o publish text2care.sln
+
+16.  Deploy the files by using the command pallette -> deploy reloaded -> deploy package
+
+17.  Add an endpoint to stripe for to point to the IP address of the server and select the 2 events we want to listen to:  payment_intent.succeeded, payment_intent.payment_failed.  Note the web hook secret as we will need this soon.
+
+http://167.172.55.49/api/payments/webhook
+
+18.  Back on the linux server create a service config for the kestrel server:
+
+sudo nano /etc/systemd/system/text2care-web.service
+
+19.  Update the configuration for your API keys where it says REPLACEME and then paste the config into the nano editor
+
+[Unit]
+Description=Kestrel service running on Ubuntu 20.04
+[Service]
+WorkingDirectory=/var/text2care
+ExecStart=/usr/bin/dotnet /var/text2care/API.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier=text2care
+User=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment='Token__Key=super secret key'
+Environment='Token__Issuer=http://167.172.55.49'
+Environment='StripeSettings__PublishibleKey=pk_test_51LZYe2CscCsr6cFbtilkcSSD5vEWMetppMmtSdvGDEpy9ClY7j0UkgxT8ERrAMxdmGH1NRnD3iRPhZ07rdb0Hboi00dvc9AcdW'
+Environment='StripeSettings__SecretKey=sk_test_51LZYe2CscCsr6cFbpn6JwHJ2LcRtmcezqlhnttIa8i0rRLbniMp9VRlmvcsgOqkSULO7g1M0IbB4VVJ7zoDurAc2001Vil2vLt'
+Environment='StripeSettings__WhSecret=whsec_z2kPGxIEmAA5YxxgXTnezfhMwEpqbXdc'
+Environment='ConnectionStrings__DefaultConnection=Server=localhost;Port=5432;User Id=rootuser;Password=Mario13Bros; Database=text2care'
+Environment='ConnectionStrings__IdentityConnection=Server=localhost;Port=5432;User Id=rootuser;Password=Mario13Bros; Database=identity'
+Environment='ConnectionStrings__Redis=localhost'
+Environment='ApiUrl=http://167.172.55.49/Content/'
+[Install]
+WantedBy=multi-user.target
+
+20.  Install the .Net runtime using the instructions here:  
+
+sudo shutdown -r now 'System maintenance'
+
+https://docs.microsoft.com/en-gb/dotnet/core/install/linux-ubuntu#2004-
+
+wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+sudo dpkg -i packages-microsoft-prod.deb
+sudo apt-get update && \
+  sudo apt-get install -y aspnetcore-runtime-6.0
+rm packages-microsoft-prod.deb
+
+21.  Restart the journal service by running the following command:
+
+systemctl restart systemd-journald
+
+22.  Start the kestrel service by running the following command:
+
+sudo systemctl start text2care-web.service
+
+23.  Check it is started by running: 
+apt install net-tools
+netstat -ntpl
+
+
+24.  Check the journal by running:
+
+journalctl -u text2care-web.service --since "5 min ago"
+
+25.  Make sure there are no errors and then test you can browse to the published app on http://167.172.55.49
+
+
+26. Secure Site
+https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-ubuntu-20-04
+
+sudo apt install certbot python3-certbot-apache
+
+sudo nano /etc/apache2/sites-available/text2care.conf
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ProxyPreserveHost On
+    ProxyPass / http://127.0.0.1:5000/
+    ProxyPassReverse / http://127.0.0.1:5000
+	ServerName pennydodo.com
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+systemctl reload apache2
+sudo nano /etc/systemd/system/text2care-web.service
+systemctl daemon-reload
+sudo systemctl restart text2care-web.service
+sudo apache2ctl configtest
+
+sudo certbot --apache

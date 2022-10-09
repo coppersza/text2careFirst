@@ -37,7 +37,14 @@ namespace API.Controllers
             var spec = new DonatorWithCountrySpecification(id);
             var data = await _donatorRepo.GetEntityWithSpec(spec);
             return _mapper.Map<Donator, DonatorToReturnDto>(data);              
-        }                
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<DonatorToReturnDto>> GetDonator(string email)        
+        {
+            var spec = new DonatorWithCountrySpecification(email);
+            var data = await _donatorRepo.GetEntityWithSpec(spec);
+            return _mapper.Map<Donator, DonatorToReturnDto>(data);              
+        }                       
     }    
     
 }
